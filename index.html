@@ -1,251 +1,198 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ChromaPath | Discovery Mode</title>
-    <style>
-        :root {
-            --bg: #121212;
-            --panel: #1e1e1e;
-            --red: #ff4d4d;
-            --green: #4dff88;
-            --blue: #4d94ff;
-            --gold: #f1c40f;
-        }
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>HueFlow</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="global-back" class="back-btn">←</div>
 
-        body {
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            background-color: var(--bg);
-            color: #eee;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-        }
-
-        .game-card {
-            background: var(--panel);
-            padding: 25px;
-            border-radius: 24px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            width: 320px;
-            text-align: center;
-        }
-
-        .canvas {
-            width: 100%;
-            height: 280px;
-            border-radius: 15px;
-            overflow: hidden;
-            border: 2px solid #333;
-            margin-bottom: 20px;
-            display: flex;
-            flex-direction: column;
-            background: #000;
-        }
-
-        .target-half { height: 50%; width: 100%; position: relative; border-bottom: 1px solid #222; }
-        .mixed-half { height: 50%; width: 100%; position: relative; transition: background 0.3s; }
-        
-        .label {
-            position: absolute;
-            top: 5px; left: 10px;
-            font-size: 0.6rem;
-            color: rgba(255,255,255,0.2);
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .progress-container { margin-bottom: 25px; }
-        .progress-label { font-size: 0.8rem; color: #777; margin-bottom: 8px; display: flex; justify-content: space-between; }
-        .progress-bar-bg { width: 100%; height: 10px; background: #111; border-radius: 5px; overflow: hidden; }
-        #progress-fill { width: 0%; height: 100%; background: linear-gradient(90deg, #4d94ff, #4dff88); transition: width 0.4s ease; }
-
-        .match-score { font-size: 2.8rem; font-weight: 100; margin-bottom: 5px; }
-        .match-subtext { font-size: 0.7rem; color: #555; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px; }
-
-        .controls {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-
-        .mix-btn {
-            background: #111;
-            border: 2px solid #333;
-            border-radius: 12px;
-            padding: 12px 0;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            transition: 0.2s;
-        }
-
-        .mix-btn:active { transform: scale(0.95); }
-        .mix-btn:disabled { opacity: 0.3; cursor: not-allowed; }
-
-        .btn-label { font-size: 0.6rem; font-weight: bold; margin-bottom: 4px; }
-        .btn-count { font-family: monospace; font-size: 1.2rem; color: #fff; }
-
-        .r-theme { border-color: var(--red); color: var(--red); }
-        .g-theme { border-color: var(--green); color: var(--green); }
-        .b-theme { border-color: var(--blue); color: var(--blue); }
-
-        .solved .btn-count { color: var(--gold); }
-        .solved .mix-btn { border-color: var(--gold) !important; color: var(--gold) !important; }
-
-        .action-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .small-btn {
-            background: #333;
-            border: none;
-            color: #999;
-            padding: 10px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-        }
-        .solve-btn { grid-column: span 2; color: var(--gold); background: #2a251a; border: 1px solid #4d4229; }
-
-    </style>
-</head>
-<body>
-
-    <div class="game-card">
+    <!-- HOME / FREE PLAY -->
+    <div id="screen-home" class="screen">
+      <h1 class="game-name-ui" onclick="window.location.hash = '#/'">
+        HUEFLOW
+      </h1>
+      <div class="subtitle-ui">FREE PLAY</div>
+      <div class="vessel">
         <div class="canvas">
-            <div class="target-half" id="target-ui"><span class="label">Goal</span></div>
-            <div class="mixed-half" id="mixed-ui"><span class="label">Your Mix</span></div>
+          <div class="box box-t" id="free-target"></div>
+          <div class="box" id="free-player"></div>
+        </div>
+        <div class="match-score" id="free-match">0%</div>
+        <div class="accuracy-label">Recipe Accuracy</div>
+        <div class="progress-area">
+          <div class="progress-text">
+            <span id="free-ink-text">0/0 Drops</span>
+            <span id="free-try-text">Undo 0</span>
+          </div>
+          <div class="bar-bg action-bar-wrapper">
+            <div id="free-action-container" class="fill-container"></div>
+          </div>
+          <div class="bar-bg result-bar-wrapper">
+            <div id="free-result-container" class="fill-container"></div>
+          </div>
         </div>
 
-        <div id="score-ui" class="match-score">0%</div>
-        <div class="match-subtext">Recipe Accuracy</div>
-
-        <div class="progress-container">
-            <div class="progress-label">
-                <span>PIGMENT STATUS</span>
-                <span id="ink-text">0 / 0</span>
-            </div>
-            <div class="progress-bar-bg"><div id="progress-fill"></div></div>
-        </div>
-
-        <div class="controls" id="controls-ui">
-            <button class="mix-btn r-theme" onclick="mix('r')">
-                <span class="btn-label">RED</span>
-                <span id="count-r" class="btn-count">0</span>
+        <div class="status-area">
+          <div class="res-row">
+            <div id="free-res-text" class="res-text"></div>
+            <span id="free-stars-span" class="stars-span"></span>
+          </div>
+          <div id="free-solve-link">
+            <button
+              class="action-btn"
+              onclick="solveGame()"
+              style="color: var(--gold)"
+            >
+              Solve
             </button>
-            <button class="mix-btn g-theme" onclick="mix('g')">
-                <span class="btn-label">GREEN</span>
-                <span id="count-g" class="btn-count">0</span>
-            </button>
-            <button class="mix-btn b-theme" onclick="mix('b')">
-                <span class="btn-label">BLUE</span>
-                <span id="count-b" class="btn-count">0</span>
-            </button>
+          </div>
         </div>
 
-        <div class="action-btns">
-            <button class="small-btn" onclick="resetBatch()">Reset</button>
-            <button class="small-btn" onclick="newLevel()">New Goal</button>
-            <button class="small-btn solve-btn" onclick="solve()">Solve & Show Recipe</button>
+        <div class="controls">
+          <button class="mix-btn r-t" id="free-btn-r" onclick="mix('r')">
+            <span class="btn-n">RED</span
+            ><span id="free-c-r" class="btn-v">0</span>
+          </button>
+          <button class="mix-btn g-t" id="free-btn-g" onclick="mix('g')">
+            <span class="btn-n">GREEN</span
+            ><span id="free-c-g" class="btn-v">0</span>
+          </button>
+          <button class="mix-btn b-t" id="free-btn-b" onclick="mix('b')">
+            <span class="btn-n">BLUE</span
+            ><span id="free-c-b" class="btn-v">0</span>
+          </button>
         </div>
+        <div class="game-footer">
+          <button class="action-btn" onclick="resetVial(true)">New</button>
+          <button class="action-btn" onclick="resetVial(false)">Reset</button>
+          <button class="action-btn" onclick="undo()">Undo</button>
+        </div>
+      </div>
+      <button class="nav-btn" onclick="window.location.hash = '#/daily'">
+          Daily Challenge
+        </button>
+        <button class="nav-btn" onclick="window.location.hash = '#/journey'">
+          Journey
+        </button>
+      <div class="home-nav-grid">
+        <button class="nav-btn" onclick="window.location.hash = '#/collection'">
+          Collection
+        </button>
+        <button class="nav-btn" onclick="shareGame()">Share</button>
+      </div>
     </div>
 
-    <script>
-        let secretRecipe = { r: 0, g: 0, b: 0 };
-        let playerRecipe = { r: 0, g: 0, b: 0 };
-        let correctDropsFound = 0;
-        let totalDropsUsed = 0;
-        let budget = 0;
-        const STEP = 50;
+    <!-- JOURNEY GRID -->
+    <div id="screen-journey" class="screen">
+      <h1 class="game-name-ui" onclick="window.location.hash = '#/'">
+        HUEFLOW
+      </h1>
+      <div class="subtitle-ui">JOURNEY</div>
+      <div id="journey-content"></div>
+    </div>
 
-        function newLevel() {
-            // 1. Create secret recipe
-            secretRecipe.r = Math.floor(Math.random() * 5);
-            secretRecipe.g = Math.floor(Math.random() * 5);
-            secretRecipe.b = Math.floor(Math.random() * 5);
+    <!-- DAILY CALENDAR -->
+    <div id="screen-daily" class="screen">
+      <h1 class="game-name-ui" onclick="window.location.hash = '#/'">
+        HUEFLOW
+      </h1>
+      <div class="subtitle-ui">DAILY CHALLENGE</div>
+      <div class="calendar-nav">
+        <button class="action-btn" onclick="changeMonth(-1)">←</button>
+        <div id="calendar-month">MONTH</div>
+        <button class="action-btn" onclick="changeMonth(1)">→</button>
+      </div>
+      <div id="calendar-ui" class="calendar-grid"></div>
+    </div>
 
-            // Safety check for empty recipe
-            if (secretRecipe.r + secretRecipe.g + secretRecipe.b === 0) secretRecipe.r = 2;
+    <!-- GAME SCREEN -->
+    <div id="screen-game" class="screen">
+      <h1 class="game-name-ui" onclick="window.location.hash = '#/'">
+        HUEFLOW
+      </h1>
+      <div class="subtitle-ui">MODE</div>
+      <div class="vessel">
+        <div class="canvas">
+          <div class="box box-t" id="game-target"></div>
+          <div class="box" id="game-player"></div>
+        </div>
+        <div class="match-score" id="game-match">0%</div>
+        <div class="accuracy-label">Recipe Accuracy</div>
+        <div class="progress-area">
+          <div class="progress-text">
+            <span id="game-ink-text">0/0 Drops</span>
+            <span id="game-try-text">Undo 0</span>
+          </div>
+          <div class="bar-bg action-bar-wrapper">
+            <div id="game-action-container" class="fill-container"></div>
+          </div>
+          <div class="bar-bg result-bar-wrapper">
+            <div id="game-result-container" class="fill-container"></div>
+          </div>
+        </div>
 
-            budget = secretRecipe.r + secretRecipe.g + secretRecipe.b;
+        <div class="status-area">
+          <div class="res-row">
+            <div id="game-res-text" class="res-text"></div>
+            <span id="game-stars-span" class="stars-span"></span>
+          </div>
+          <div id="game-solve-link">
+            <button
+              class="action-btn"
+              onclick="solveGame()"
+              style="color: var(--gold)"
+            >
+              Solve
+            </button>
+          </div>
+        </div>
 
-            // 2. Set Target Color (Standard Additive for visibility)
-            let targetRGB = [
-                Math.min(255, secretRecipe.r * STEP),
-                Math.min(255, secretRecipe.g * STEP),
-                Math.min(255, secretRecipe.b * STEP)
-            ];
-            document.getElementById('target-ui').style.backgroundColor = `rgb(${targetRGB[0]}, ${targetRGB[1]}, ${targetRGB[2]})`;
+        <div class="controls">
+          <button class="mix-btn r-t" onclick="mix('r')">
+            <span class="btn-n">RED</span
+            ><span id="game-c-r" class="btn-v">0</span>
+          </button>
+          <button class="mix-btn g-t" onclick="mix('g')">
+            <span class="btn-n">GREEN</span
+            ><span id="game-c-g" class="btn-v">0</span>
+          </button>
+          <button class="mix-btn b-t" onclick="mix('b')">
+            <span class="btn-n">BLUE</span
+            ><span id="game-c-b" class="btn-v">0</span>
+          </button>
+        </div>
+        <div class="game-footer" id="game-footer-ui"></div>
+      </div>
+    </div>
 
-            resetBatch();
-        }
+    <!-- COLLECTION SCREEN -->
+    <div id="screen-collection" class="screen">
+      <h1 class="game-name-ui" onclick="window.location.hash = '#/'">
+        HUEFLOW
+      </h1>
+      <div class="subtitle-ui" id="collection-stats">COLLECTED: 0</div>
+      <div class="calendar-nav" style="gap: 10px; margin-bottom: 20px">
+        <button class="action-btn" onclick="renderCollection('hue')">
+          Hue
+        </button>
+        <button class="action-btn" onclick="renderCollection('drops')">
+          Drops
+        </button>
+        <button class="action-btn" onclick="renderCollection('date')">
+          Date
+        </button>
+      </div>
+      <div id="collection-grid" class="level-grid"></div>
+    </div>
+    <div class="copyright"> © 2025 HueFlow</div>
 
-        function mix(color) {
-            if (totalDropsUsed >= budget) return;
-
-            // Check if this drop is "correct" (Discovery Logic)
-            if (playerRecipe[color] < secretRecipe[color]) {
-                correctDropsFound++;
-            }
-
-            playerRecipe[color]++;
-            totalDropsUsed++;
-            updateUI();
-        }
-
-        function solve() {
-            playerRecipe = { ...secretRecipe };
-            totalDropsUsed = budget;
-            correctDropsFound = budget;
-            document.getElementById('controls-ui').classList.add('solved');
-            updateUI();
-        }
-
-        function resetBatch() {
-            playerRecipe = { r: 0, g: 0, b: 0 };
-            totalDropsUsed = 0;
-            correctDropsFound = 0;
-            document.getElementById('controls-ui').classList.remove('solved');
-            document.querySelectorAll('.mix-btn').forEach(b => b.disabled = false);
-            updateUI();
-        }
-
-        function updateUI() {
-            // 1. Update Color (Visual feedback)
-            let currentRGB = [
-                Math.min(255, playerRecipe.r * STEP),
-                Math.min(255, playerRecipe.g * STEP),
-                Math.min(255, playerRecipe.b * STEP)
-            ];
-            document.getElementById('mixed-ui').style.backgroundColor = `rgb(${currentRGB[0]}, ${currentRGB[1]}, ${currentRGB[2]})`;
-
-            // 2. Update Progress (LINEAR INCREASING)
-            let progressPct = (correctDropsFound / budget) * 100;
-            document.getElementById('score-ui').innerText = Math.floor(progressPct) + "%";
-            document.getElementById('score-ui').style.color = progressPct === 100 ? "var(--green)" : "#fff";
-
-            // 3. Update Ink Meter
-            let inkPct = (totalDropsUsed / budget) * 100;
-            document.getElementById('progress-fill').style.width = inkPct + "%";
-            document.getElementById('ink-text').innerText = `${totalDropsUsed} / ${budget} Drops`;
-
-            // 4. Update Button Counters
-            document.getElementById('count-r').innerText = playerRecipe.r;
-            document.getElementById('count-g').innerText = playerRecipe.g;
-            document.getElementById('count-b').innerText = playerRecipe.b;
-
-            // 5. Disable buttons at limit
-            if (totalDropsUsed >= budget) {
-                document.querySelectorAll('.mix-btn').forEach(b => b.disabled = true);
-            }
-        }
-
-        newLevel();
-    </script>
-</body>
+    <script src="data.js"></script>
+    <script src="game.js"></script>
+  </body>
 </html>
