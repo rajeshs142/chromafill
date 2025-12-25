@@ -33,7 +33,7 @@ html {
     flex-direction: column;
     align-items: center;
     /* min-height: 100vh; */
-    padding: 15px;
+    /* padding: 15px; */
     box-sizing: border-box;
     overflow-y: auto;
 }
@@ -365,43 +365,10 @@ h1.game-name-ui {
     color: var(--accent);
 }
 
-.calendar-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 6px;
-    width: 100%;
-    max-width: 376px;
-}
 
-.cal-day {
-    width: 100%;
-    aspect-ratio: 1;
-    background: #161616;
-    border-radius: 8px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.7rem;
-    cursor: pointer;
-    border: 1px solid #222;
-    position: relative;
-}
 
-.cal-day.solved {
-    color: transparent !important;
-}
 
-.cal-day.solved::after {
-    content: "✓";
-    color: white !important;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -55%);
-    font-size: 0.9rem;
-    font-weight: bold;
-}
+
 /* Add to styles.css */
 .btn-undo {
     color: var(--accent) !important;
@@ -411,10 +378,7 @@ h1.game-name-ui {
 .hide-solve {
     display: none !important;
 }
-.cal-day.locked {
-    opacity: 0.1;
-    cursor: default;
-}
+
 
 .game-footer {
     display: grid;
@@ -581,18 +545,39 @@ body.light-theme .subtitle-ui {
 .res-text.solved { color: var(--grey); }
 .res-text.info { color: var(--white); }
 
-/* Container for the square + stars */
+
+
+
+
+/* Container for the Daily Screen content */
+/* Container for the Daily Screen */
+#screen-daily {
+    width: 100%;
+    max-width: 375px; /* iPhone SE Standard */
+    margin: 0 auto;
+    padding: 0 15px;
+    box-sizing: border-box;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr); /* 7 equal columns */
+    gap: 6px; /* Reduced gap for small screens */
+    width: 100%;
+}
+
 .cal-item {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
+    min-width: 0; /* Prevents grid blowout */
 }
 
 .cal-day {
-    width: 100%; /* Responsive to grid */
-    aspect-ratio: 1;
-    border-radius: 12px;
+    width: 100%; /* Fills 1/7th of the grid width */
+    aspect-ratio: 1 / 1; /* Forces perfect square */
+    border-radius: 10px;
     background: #161616;
     display: flex;
     align-items: center;
@@ -600,34 +585,43 @@ body.light-theme .subtitle-ui {
     font-size: 0.75rem;
     font-weight: bold;
     cursor: pointer;
-    border: 1px solid #222;
+    border: 2px solid #222;
     position: relative;
-    color: var(--text-label); /* Default dim color for unsolved */
+    box-sizing: border-box; /* Crucial for border math */
 }
 
-/* Solved State: Keep number visible but with high contrast */
-.cal-day.solved {
-    color: #fff !important;
-    text-shadow: 0 1px 3px rgba(0,0,0,0.8); /* Ensures number is readable on light colors */
-    border-color: rgba(255,255,255,0.1);
+/* Ensure empty/padding days have the exact same dimensions */
+.cal-day.empty {
+    border: 2px solid transparent;
+    background: transparent;
+    cursor: default;
 }
 
-/* Remove the Tick Mark Logic */
-.cal-day.solved::after {
-    display: none !important;
-}
-
-/* Star Row Underneath (Same as Journey) */
 .cal-stars-row {
-    height: 10px;
-    font-size: 0.45rem;
+    height: 10px; /* Fixed height so rows don't jump */
+    font-size: 0.6rem;
     color: var(--gold);
     margin-top: 4px;
-    letter-spacing: 1px;
-    text-align: center;
+    line-height: 10px;
+}
+.cal-day.locked {
+    color: #888;
 }
 
-.cal-day.locked {
-    opacity: 0.1;
-    cursor: default;
+.screen {
+    scroll-behavior: auto !important; /* Disables smooth scroll during screen swaps */
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch; /* Ensures smooth momentum on iPhone */
+        overflow-anchor: none; 
+
+}
+
+/* Ensure the wrapper doesn't hold onto a weird height */
+#journey-content {
+    display: block;
+    width: 100%;
+}
+
+.screen.active {
+    display: flex;
 }

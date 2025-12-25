@@ -23,10 +23,10 @@ const CONFIG = {
       "Try again",
     ],
   },
-      dailyRange: {
-        minDrops: 5,
-        maxDrops: 15
-    },
+  dailyRange: {
+    minDrops: 5,
+    maxDrops: 15,
+  },
   freePlay: { minDrops: 3, maxDrops: 12 },
   solveThreshold: 10,
 };
@@ -58,19 +58,25 @@ window.addEventListener("hashchange", router);
 function router() {
   document.body.style.backgroundColor = "";
   document.body.classList.remove("light-theme");
-  
+  updateDailyButtonVisuals();
+
   const hash = window.location.hash || "#/";
   const parts = hash.split("/");
   const gb = document.getElementById("global-back");
 
   // --- 1. REDIRECT HOME TO RESUME JOURNEY ---
   if (hash === "#/" || hash === "") {
-      resumeJourney();
-      return;
+    resumeJourney();
+    return;
   }
 
   // --- 2. DYNAMIC NAVIGATION LOGIC ---
-  if (hash === "#/journey" || hash === "#/daily" || hash === "#/collection" || hash === "#/free")
+  if (
+    hash === "#/journey" ||
+    hash === "#/daily" ||
+    hash === "#/collection" ||
+    hash === "#/free"
+  )
     gb.onclick = () => (window.location.hash = "#/");
   else if (parts[1] === "journey")
     gb.onclick = () => (window.location.hash = "#/journey");
@@ -80,31 +86,70 @@ function router() {
   gb.style.display = hash === "#/" ? "none" : "flex";
 
   // --- 3. ROUTE HANDLERS ---
-  if (hash === "#/free") showScreen("screen-home"); // Use existing home screen for Free Play
-  else if (hash === "#/journey") renderJourney();
-  else if (hash === "#/daily") renderDaily();
+  if (hash === "#/free")
+    showScreen("screen-home"); // Use existing home screen for Free Play
+  else if (hash === "#/journey") {
+    renderJourney();
+  } else if (hash === "#/daily") renderDaily();
   else if (hash === "#/collection") renderCollection("hue");
-  else if (parts[1] === "journey") loadGame("journey", parts[2], parseInt(parts[3]));
-  else if (parts[1] === "daily") loadGame("daily", "master", parts[2]);
+  // --- JOURNEY GATEKEEPER ---
+  else if (parts[1] === "journey") {
+    const tierId = parts[2];
+    const levelIdx = parseInt(parts[3]);
+
+    // 1. Check if tier is unlocked
+    const isUnlocked = state.unlocked.includes(tierId);
+
+    // 2. Check if the level actually exists in JOURNEY_DATA
+    const tierLevels = JOURNEY_DATA.filter((l) => l.mode === tierId);
+    const levelExists = tierLevels && tierLevels[levelIdx] !== undefined;
+
+    if (!isUnlocked || !levelExists) {
+      // If locked or invalid, bounce to Home (which resumes current progress)
+      window.location.hash = "#/";
+
+      return;
+    }
+
+    loadGame("journey", tierId, levelIdx);
+  }
+  // --- DAILY GATEKEEPER ---
+  else if (parts[1] === "daily") {
+    const today = new Date().toISOString().split("T")[0];
+    const requestedDate = parts[2];
+
+    if (requestedDate > today || requestedDate < CONFIG.launchDate) {
+      window.location.hash = "#/"; // Bounce to Home if future/invalid date
+      return;
+    }
+    loadGame("daily", "master", requestedDate);
+  }
 
   initProgressToggle();
   applyBarPreference();
 }
 
 function resumeJourney() {
-    // Find the first level in JOURNEY_DATA that doesn't have stars in state.levels
-    const nextLevel = JOURNEY_DATA.find(l => !state.levels[l.id]);
+  // Find the first level in the entire dataset that doesn't have stars
+  const nextLevel = JOURNEY_DATA.find((l) => !state.levels[l.id]);
 
-    if (nextLevel) {
-        // Find the index of this level within its specific tier
-        const tierLevels = JOURNEY_DATA.filter(l => l.mode === nextLevel.mode);
-        const idx = tierLevels.indexOf(nextLevel);
-        window.location.hash = `#/journey/${nextLevel.mode}/${idx}`;
+  if (nextLevel) {
+    const tierLevels = JOURNEY_DATA.filter((l) => l.mode === nextLevel.mode);
+    const idx = tierLevels.indexOf(nextLevel);
+
+    // Safety check: only redirect if the tier is unlocked
+    if (state.unlocked.includes(nextLevel.mode)) {
+      window.location.hash = `#/journey/${nextLevel.mode}/${idx}`;
     } else {
-        // If all 300 levels are completed, go to the Swatchbook
-        window.location.hash = "#/journey";
+      // If they haven't unlocked the next tier yet, show the Swatchbook
+      window.location.hash = "#/journey";
     }
+  } else {
+    // Everything complete!
+    window.location.hash = "#/journey";
+  }
 }
+
 function recipeToRGB(rec) {
   if (!rec || rec.r + rec.g + rec.b === 0) return "rgb(0,0,0)";
   const max = Math.max(rec.r, rec.g, rec.b);
@@ -308,9 +353,49 @@ function handleFail() {
       Math.floor(Math.random() * CONFIG.messages.softFails.length)
     ];
 
-      if (cur.undosUsed >= CONFIG.solveThreshold) {
+  if (cur.undosUsed >= CONFIG.solveThreshold) {
     document.getElementById(`${p}-solve-link`).style.display = "block";
   }
+}
+function handleDailyNav() {
+  const now = new Date();
+  const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+  
+  if (state.daily[today]) {
+    window.location.hash = "#/daily";
+  } else {
+    window.location.hash = `#/daily/${today}`;
+  }
+}
+function updateDailyButtonVisuals() {
+    // 1. Use local date to avoid timezone "tomorrow" bugs
+    const now = new Date();
+    const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+    
+    // 2. Find ALL daily buttons (on Home/Free screen and Game screen)
+    const dailyBtns = [
+        document.getElementById("daily-nav-btn"), // Button on Free Play screen
+        document.getElementById("game-daily-btn") // Button on Journey/Game screen
+    ];
+
+    const todayRecipe = getSeededDailyRecipe(today);
+    const todayColor = recipeToRGB(todayRecipe);
+
+    dailyBtns.forEach(btn => {
+        if (!btn) return;
+
+        if (state.daily[today]) {
+            btn.style.borderColor = "var(--green-btn)";
+            btn.style.color = "var(--green-btn)";
+            btn.innerText = "Daily Solved ✓";
+            btn.style.boxShadow = "none";
+        } else {
+            btn.style.borderColor = todayColor;
+            btn.style.color = "#fff";
+            btn.innerText = "Daily Challenge";
+            btn.style.boxShadow = `0 0 15px ${todayColor}44`;
+        }
+    });
 }
 
 function resetStatus() {
@@ -325,7 +410,7 @@ function resetStatus() {
 }
 
 function loadGame(type, tierId, idx) {
-let recipe;
+  let recipe;
   const tierData = CONFIG.tiers.find((t) => t.id === tierId);
   const tierLevels = JOURNEY_DATA.filter((l) => l.mode === tierId);
   // 1. Get the raw recipe
@@ -338,13 +423,13 @@ let recipe;
       : tierLevels[idx];
 
   // 2. IMPORTANT FIX: Create the recipe object and CALCULATE TOTAL
-   recipe = {
+  recipe = {
     ...rawRecipe,
     total: rawRecipe.r + rawRecipe.g + rawRecipe.b,
   };
   if (type === "daily") {
-      // NEW LOGIC: Generate a unique seeded color for this specific date
-      recipe = getSeededDailyRecipe(idx);
+    // NEW LOGIC: Generate a unique seeded color for this specific date
+    recipe = getSeededDailyRecipe(idx);
   }
   cur = {
     type,
@@ -384,14 +469,13 @@ function renderGameFooter() {
   f.appendChild(btn("Share", () => shareGame()));
   f.appendChild(btn("Undo", () => undo()));
   if (cur.type === "daily") {
-        f.appendChild(btn("Prev", () => navDate(-1)));
+    f.appendChild(btn("Prev", () => navDate(-1)));
 
-    f.appendChild(btn("Daily", () => (window.location.hash = "#/daily")));
-      f.appendChild(btn("Next", () => navDate(1)));
+    f.appendChild(btn("Calendar", () => (window.location.hash = "#/daily")));
+    f.appendChild(btn("Next", () => navDate(1)));
+  }
 
-}
- 
-//f.appendChild(btn("Solve", () => solveGame(), "var(--gold)"));
+  //f.appendChild(btn("Solve", () => solveGame(), "var(--gold)"));
 
   if (cur.type === "journey") {
     f.appendChild(btn("Prev", () => navLevel(-1)));
@@ -445,15 +529,15 @@ function navLevel(dir) {
 function navDate(dir) {
   // 1. Parse the current date from the state
   const currentDate = new Date(cur.id);
-  
+
   // 2. Add/Subtract the day
   currentDate.setDate(currentDate.getDate() + dir);
-  
+
   // 3. Format back to YYYY-MM-DD
-  const targetDateStr = currentDate.toISOString().split('T')[0];
-  
+  const targetDateStr = currentDate.toISOString().split("T")[0];
+
   // 4. Boundary Checks
-  const todayStr = new Date().toISOString().split('T')[0];
+  const todayStr = new Date().toISOString().split("T")[0];
   const launchStr = CONFIG.launchDate;
 
   // Gatekeeper: Don't go past today or before launch
@@ -462,14 +546,40 @@ function navDate(dir) {
   // 5. Update Hash
   window.location.hash = `#/daily/${targetDateStr}`;
 }
+// function showScreen(id) {
+//   document
+//     .querySelectorAll(".screen")
+//     .forEach((s) => s.classList.remove("active"));
+//   document.getElementById(id).classList.add("active");
+//   if (id === "screen-home") initFreePlay();
+// }
 function showScreen(id) {
-  document
-    .querySelectorAll(".screen")
-    .forEach((s) => s.classList.remove("active"));
-  document.getElementById(id).classList.add("active");
-  if (id === "screen-home") initFreePlay();
-}
+  // 1. Hide all screens
+  document.querySelectorAll(".screen").forEach((s) => {
+    s.classList.remove("active");
+  });
 
+  const target = document.getElementById(id);
+  if (target) {
+    target.classList.add("active");
+
+    // 2. Aggressive scroll reset
+    // This handles both the internal div scroll and the mobile body scroll
+    target.scrollTop = 0;
+    window.scrollTo(0, 0);
+
+    // 3. Fallback for browsers that "remember" scroll position too well
+    setTimeout(() => {
+      target.scrollTop = 0;
+      window.scrollTo(0, 0);
+    }, 10);
+  }
+
+  if (id === "screen-home") {
+    initFreePlay();
+    document.querySelectorAll(".subtitle-ui").forEach(el => el.innerText = "FREE PLAY");
+  }
+}
 function initFreePlay() {
   const min = CONFIG.freePlay.minDrops,
     max = CONFIG.freePlay.maxDrops;
@@ -535,6 +645,8 @@ function renderJourney() {
     cont.appendChild(grid);
   });
   showScreen("screen-journey");
+    const screenJourney = document.getElementById("screen-journey");
+  if (screenJourney) screenJourney.scrollTop = 0;
 }
 
 function renderDaily() {
@@ -549,31 +661,42 @@ function renderDaily() {
     "calendar-month"
   ).innerText = `${monthName.toUpperCase()} ${viewingYear}`;
 
-  const days = new Date(viewingYear, viewingMonth + 1, 0).getDate();
-  const firstDay = new Date(viewingYear, viewingMonth, 1).getDay();
+  const daysInMonth = new Date(viewingYear, viewingMonth + 1, 0).getDate();
+   const firstDayIndex = new Date(viewingYear, viewingMonth, 1).getDay();
 
-  for (let i = 0; i < firstDay; i++)
-    grid.appendChild(
-      Object.assign(document.createElement("div"), {
-        className: "cal-day locked",
-        style: "opacity:0",
-      })
-    );
-for (let d = 1; d <= days; d++) {
+  // 1. Padding for start of month (Wrapped in cal-item for symmetry)
+  for (let i = 0; i < firstDayIndex; i++) {
+    const item = document.createElement("div");
+    item.className = "cal-item";
+    
+    const emptyDay = document.createElement("div");
+    emptyDay.className = "cal-day empty";
+    
+    const emptyStars = document.createElement("div");
+    emptyStars.className = "cal-stars-row";
+    
+    item.appendChild(emptyDay);
+    item.appendChild(emptyStars);
+    grid.appendChild(item);
+  }
+ // 2. Real Days
+  for (let d = 1; d <= daysInMonth; d++) {
     const dateKey = `${viewingYear}-${String(viewingMonth + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
     
-    // 1. Create Wrapper
     const item = document.createElement("div");
     item.className = "cal-item";
 
-    // 2. Create the Square
     const day = document.createElement("div");
     day.className = "cal-day";
     day.innerText = d;
-
     const solvedData = state.daily[dateKey];
     const isFuture = dateKey > todayStr;
     const isBeforeLaunch = dateKey < CONFIG.launchDate;
+
+    // --- SEED COLOR LOGIC ---
+    // Generate the color for THIS day regardless of whether it's solved
+    const dailyRecipe = getSeededDailyRecipe(dateKey);
+    const dailyColor = recipeToRGB(dailyRecipe);
 
     if (isFuture || isBeforeLaunch) {
         day.classList.add("locked");
@@ -581,18 +704,23 @@ for (let d = 1; d <= days; d++) {
         if (solvedData) {
             day.classList.add("solved");
             day.style.backgroundColor = solvedData.color || solvedData;
+            day.style.borderColor = "transparent";
+        } else {
+            // UNFINISHED: Apply the target color as a border hint
+            day.classList.add("unfinished");
+            day.style.borderColor = dailyColor;
+            // Add a very subtle inner glow of the target color
+            day.style.boxShadow = `inset 0 0 8px ${dailyColor}33`; 
         }
+        
         day.onclick = () => (window.location.hash = `#/daily/${dateKey}`);
     }
-
-    // 3. Create the Stars Row underneath
-    const starRow = document.createElement("div");
+ const starRow = document.createElement("div");
     starRow.className = "cal-stars-row";
     if (solvedData && solvedData.stars) {
-        starRow.innerText = "★".repeat(solvedData.stars);
+      starRow.innerText = "★".repeat(solvedData.stars);
     }
 
-    // 4. Assemble
     item.appendChild(day);
     item.appendChild(starRow);
     grid.appendChild(item);
@@ -678,16 +806,19 @@ function getHue(r, g, b) {
 function changeMonth(dir) {
   // 1. Create target date based on current view
   const targetDate = new Date(viewingYear, viewingMonth + dir, 1);
-  
+
   // 2. Normalize Today and Launch dates to the 1st of the month
   const today = new Date();
   const maxLimit = new Date(today.getFullYear(), today.getMonth(), 1);
-  
+
   const launch = new Date(CONFIG.launchDate);
   const minLimit = new Date(launch.getFullYear(), launch.getMonth(), 1);
 
   // 3. Comparison
-  if (targetDate.getTime() < minLimit.getTime() || targetDate.getTime() > maxLimit.getTime()) {
+  if (
+    targetDate.getTime() < minLimit.getTime() ||
+    targetDate.getTime() > maxLimit.getTime()
+  ) {
     return; // Blocked
   }
 
@@ -711,32 +842,34 @@ function getContrastYIQ(rgb) {
     : "dark";
 }
 function getSeededDailyRecipe(dateStr) {
-    // 1. Create a numeric seed from the date (e.g., "2025-12-24" -> 20251224)
-    const seed = parseInt(dateStr.replace(/-/g, ''));
-    
-    // Simple pseudo-random function based on the seed
-    const sRandom = (s) => {
-        const x = Math.sin(s) * 10000;
-        return x - Math.floor(x);
-    };
+  // 1. Create a numeric seed from the date (e.g., "2025-12-24" -> 20251224)
+  const seed = parseInt(dateStr.replace(/-/g, ""));
 
-    const min = CONFIG.dailyRange.minDrops;
-    const max = CONFIG.dailyRange.maxDrops;
+  // Simple pseudo-random function based on the seed
+  const sRandom = (s) => {
+    const x = Math.sin(s) * 10000;
+    return x - Math.floor(x);
+  };
 
-    // 2. Generate Total Drops (Seeded)
-    const total = Math.floor(sRandom(seed) * (max - min + 1)) + min;
+  const min = CONFIG.dailyRange.minDrops;
+  const max = CONFIG.dailyRange.maxDrops;
 
-    // 3. Distribute Drops (Seeded)
-    // We offset the seed for each channel so they aren't the same
-    let r = Math.floor(sRandom(seed + 1) * Math.min(10, total + 1));
-    let g = Math.floor(sRandom(seed + 2) * Math.min(10, total - r + 1));
-    let b = total - r - g;
+  // 2. Generate Total Drops (Seeded)
+  const total = Math.floor(sRandom(seed) * (max - min + 1)) + min;
 
-    return { 
-        r, g, b, 
-        total, 
-        name: `Daily ${formatDisplayDate(dateStr)}` 
-    };
+  // 3. Distribute Drops (Seeded)
+  // We offset the seed for each channel so they aren't the same
+  let r = Math.floor(sRandom(seed + 1) * Math.min(10, total + 1));
+  let g = Math.floor(sRandom(seed + 2) * Math.min(10, total - r + 1));
+  let b = total - r - g;
+
+  return {
+    r,
+    g,
+    b,
+    total,
+    name: `Daily ${formatDisplayDate(dateStr)}`,
+  };
 }
 function saveLevel(s) {
   const id = cur.recipe.id;

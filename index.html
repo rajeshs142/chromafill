@@ -72,10 +72,9 @@
           <button class="action-btn" onclick="undo()">Undo</button>
         </div>
       </div>
-      <button class="nav-btn" onclick="window.location.hash = '#/daily'">
-          Daily Challenge
-        </button>
-        <button class="nav-btn" onclick="window.location.hash = '#/journey'">
+<button id="daily-nav-btn" class="nav-btn" onclick="handleDailyNav()">
+  Daily Challenge
+</button>        <button class="nav-btn" onclick="window.location.hash = '#/journey'">
           Journey
         </button>
             <button class="nav-btn" onclick="window.location.hash = '#/free'">Free Play</button>
@@ -168,9 +167,8 @@
         </div>
         <div class="game-footer" id="game-footer-ui"></div>
       </div>
-      <button class="nav-btn" onclick="window.location.hash = '#/daily'">
-          Daily Challenge
-        </button>
+    <button id="game-daily-btn" class="nav-btn" onclick="handleDailyNav()">Daily Challenge</button>
+
         <button class="nav-btn" onclick="window.location.hash = '#/journey'">
           Journey
         </button>
