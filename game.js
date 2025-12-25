@@ -36,7 +36,7 @@ const DEFAULTS = {
   levels: {},
   daily: {},
   atlas: {},
-  barPreference: "action",
+  barPreference: "result",
 };
 const savedData = JSON.parse(localStorage.getItem("hf_final_v1")) || {};
 let state = { ...DEFAULTS, ...savedData };
@@ -58,11 +58,19 @@ window.addEventListener("hashchange", router);
 function router() {
   document.body.style.backgroundColor = "";
   document.body.classList.remove("light-theme");
-  const hash = window.location.hash || "#/",
-    parts = hash.split("/");
+  
+  const hash = window.location.hash || "#/";
+  const parts = hash.split("/");
   const gb = document.getElementById("global-back");
 
-  if (hash === "#/journey" || hash === "#/daily" || hash === "#/collection")
+  // --- 1. REDIRECT HOME TO RESUME JOURNEY ---
+  if (hash === "#/" || hash === "") {
+      resumeJourney();
+      return;
+  }
+
+  // --- 2. DYNAMIC NAVIGATION LOGIC ---
+  if (hash === "#/journey" || hash === "#/daily" || hash === "#/collection" || hash === "#/free")
     gb.onclick = () => (window.location.hash = "#/");
   else if (parts[1] === "journey")
     gb.onclick = () => (window.location.hash = "#/journey");
@@ -71,17 +79,32 @@ function router() {
 
   gb.style.display = hash === "#/" ? "none" : "flex";
 
-  if (hash === "#/") showScreen("screen-home");
+  // --- 3. ROUTE HANDLERS ---
+  if (hash === "#/free") showScreen("screen-home"); // Use existing home screen for Free Play
   else if (hash === "#/journey") renderJourney();
   else if (hash === "#/daily") renderDaily();
   else if (hash === "#/collection") renderCollection("hue");
-  else if (parts[1] === "journey")
-    loadGame("journey", parts[2], parseInt(parts[3]));
+  else if (parts[1] === "journey") loadGame("journey", parts[2], parseInt(parts[3]));
   else if (parts[1] === "daily") loadGame("daily", "master", parts[2]);
+
   initProgressToggle();
   applyBarPreference();
 }
 
+function resumeJourney() {
+    // Find the first level in JOURNEY_DATA that doesn't have stars in state.levels
+    const nextLevel = JOURNEY_DATA.find(l => !state.levels[l.id]);
+
+    if (nextLevel) {
+        // Find the index of this level within its specific tier
+        const tierLevels = JOURNEY_DATA.filter(l => l.mode === nextLevel.mode);
+        const idx = tierLevels.indexOf(nextLevel);
+        window.location.hash = `#/journey/${nextLevel.mode}/${idx}`;
+    } else {
+        // If all 300 levels are completed, go to the Swatchbook
+        window.location.hash = "#/journey";
+    }
+}
 function recipeToRGB(rec) {
   if (!rec || rec.r + rec.g + rec.b === 0) return "rgb(0,0,0)";
   const max = Math.max(rec.r, rec.g, rec.b);
@@ -284,6 +307,10 @@ function handleFail() {
     CONFIG.messages.softFails[
       Math.floor(Math.random() * CONFIG.messages.softFails.length)
     ];
+
+      if (cur.undosUsed >= CONFIG.solveThreshold) {
+    document.getElementById(`${p}-solve-link`).style.display = "block";
+  }
 }
 
 function resetStatus() {
@@ -532,32 +559,44 @@ function renderDaily() {
         style: "opacity:0",
       })
     );
-  for (let d = 1; d <= days; d++) {
-    const dateKey = `${viewingYear}-${String(viewingMonth + 1).padStart(
-      2,
-      "0"
-    )}-${String(d).padStart(2, "0")}`;
+for (let d = 1; d <= days; d++) {
+    const dateKey = `${viewingYear}-${String(viewingMonth + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
+    
+    // 1. Create Wrapper
+    const item = document.createElement("div");
+    item.className = "cal-item";
+
+    // 2. Create the Square
     const day = document.createElement("div");
     day.className = "cal-day";
     day.innerText = d;
+
     const solvedData = state.daily[dateKey];
-    if (dateKey > todayStr || dateKey < CONFIG.launchDate)
-      day.classList.add("locked");
-    else {
-      if (solvedData) {
-        day.classList.add("solved");
-        day.style.backgroundColor = solvedData.color || solvedData;
-        if (solvedData.stars) {
-          const s = document.createElement("div");
-          s.className = "cal-stars";
-          s.innerText = "★".repeat(solvedData.stars);
-          day.appendChild(s);
+    const isFuture = dateKey > todayStr;
+    const isBeforeLaunch = dateKey < CONFIG.launchDate;
+
+    if (isFuture || isBeforeLaunch) {
+        day.classList.add("locked");
+    } else {
+        if (solvedData) {
+            day.classList.add("solved");
+            day.style.backgroundColor = solvedData.color || solvedData;
         }
-      }
-      day.onclick = () => (window.location.hash = `#/daily/${dateKey}`);
+        day.onclick = () => (window.location.hash = `#/daily/${dateKey}`);
     }
-    grid.appendChild(day);
-  }
+
+    // 3. Create the Stars Row underneath
+    const starRow = document.createElement("div");
+    starRow.className = "cal-stars-row";
+    if (solvedData && solvedData.stars) {
+        starRow.innerText = "★".repeat(solvedData.stars);
+    }
+
+    // 4. Assemble
+    item.appendChild(day);
+    item.appendChild(starRow);
+    grid.appendChild(item);
+}
   showScreen("screen-daily");
 }
 
@@ -637,10 +676,23 @@ function getHue(r, g, b) {
 }
 
 function changeMonth(dir) {
-  const n = new Date(viewingYear, viewingMonth + dir, 1);
-  if (n > new Date() || n < new Date(CONFIG.launchDate)) return;
-  viewingMonth = n.getMonth();
-  viewingYear = n.getFullYear();
+  // 1. Create target date based on current view
+  const targetDate = new Date(viewingYear, viewingMonth + dir, 1);
+  
+  // 2. Normalize Today and Launch dates to the 1st of the month
+  const today = new Date();
+  const maxLimit = new Date(today.getFullYear(), today.getMonth(), 1);
+  
+  const launch = new Date(CONFIG.launchDate);
+  const minLimit = new Date(launch.getFullYear(), launch.getMonth(), 1);
+
+  // 3. Comparison
+  if (targetDate.getTime() < minLimit.getTime() || targetDate.getTime() > maxLimit.getTime()) {
+    return; // Blocked
+  }
+
+  viewingMonth = targetDate.getMonth();
+  viewingYear = targetDate.getFullYear();
   renderDaily();
 }
 

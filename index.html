@@ -46,9 +46,7 @@
           <div id="free-solve-link">
             <button
               class="action-btn"
-              onclick="solveGame()"
-              style="color: var(--gold)"
-            >
+              onclick="solveGame()"            >
               Solve
             </button>
           </div>
@@ -80,6 +78,8 @@
         <button class="nav-btn" onclick="window.location.hash = '#/journey'">
           Journey
         </button>
+            <button class="nav-btn" onclick="window.location.hash = '#/free'">Free Play</button>
+
       <div class="home-nav-grid">
         <button class="nav-btn" onclick="window.location.hash = '#/collection'">
           Collection
@@ -146,7 +146,6 @@
             <button
               class="action-btn"
               onclick="solveGame()"
-              style="color: var(--gold)"
             >
               Solve
             </button>
@@ -168,6 +167,20 @@
           </button>
         </div>
         <div class="game-footer" id="game-footer-ui"></div>
+      </div>
+      <button class="nav-btn" onclick="window.location.hash = '#/daily'">
+          Daily Challenge
+        </button>
+        <button class="nav-btn" onclick="window.location.hash = '#/journey'">
+          Journey
+        </button>
+            <button class="nav-btn" onclick="window.location.hash = '#/free'">Free Play</button>
+
+      <div class="home-nav-grid">
+        <button class="nav-btn" onclick="window.location.hash = '#/collection'">
+          Collection
+        </button>
+        <button class="nav-btn" onclick="shareGame()">Share</button>
       </div>
     </div>
 
