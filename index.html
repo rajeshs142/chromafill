@@ -85,6 +85,8 @@
         </button>
         <button class="nav-btn" onclick="shareGame()">Share</button>
       </div>
+      <button class="nav-btn" onclick="window.location.hash = '#/tutorial'">How to Play</button>
+
     </div>
 
     <!-- JOURNEY GRID -->
@@ -142,7 +144,7 @@
         <div class="status-area">
           <div class="res-row">
             <div id="game-res-text" class="res-text"></div>
-            <span id="game-stars-span" class="stars-span"></span>
+            <div id="game-stars-span" class="stars-span"></div>
           </div>
           <div id="game-solve-link">
             <button
@@ -183,6 +185,8 @@
         </button>
         <button class="nav-btn" onclick="shareGame()">Share</button>
       </div>
+      <button class="nav-btn" onclick="window.location.hash = '#/tutorial'">How to Play</button>
+
     </div>
 
     <!-- COLLECTION SCREEN -->
@@ -202,8 +206,53 @@
           Date
         </button>
       </div>
-      <div id="collection-grid" class="level-grid"></div>
+      <div id="collection-grid" class="level-grid">
+        
+      </div>
     </div>
+     <!-- tutorial SCREEN -->
+    <div id="screen-tutorial" class="screen">
+      <h1 class="game-name-ui" onclick="window.location.hash = '#/'">
+        HUEFLOW
+      </h1>
+      <div class="subtitle-ui" id="tutorial-stats">How to play</div>
+      <div id="tutorial-grid" class="level-grid">
+        
+      </div>
+    </div>
+<!-- TUTORIAL MODAL -->
+<div id="tutorial-modal" class="modal-overlay">
+    <div class="modal-content">
+        <div id="slides-container">
+            <!-- Slide 1 -->
+            <div class="tutorial-slide active">
+                <h3 style="letter-spacing: 2px;">THE GOAL</h3>
+                <p style="font-size: 0.8rem; color: #aaa;">Recreate the top color by adding drops of light to your vial.</p>
+                <div class="canvas" style="height: 200px; margin: 20px 0;">
+                    <div class="box" style="background: #ffff00; flex:1"></div>
+                    <div class="box" style="background: #000; flex:1"></div>
+                </div>
+            </div>
+            <!-- Slide 2 -->
+            <div class="tutorial-slide">
+                <h3 style="letter-spacing: 2px;">THE PHYSICS</h3>
+                <p style="font-size: 0.8rem; color: #aaa;">Mixing light is additive.</p>
+                <div class="equation"><div class="dot red"></div> + <div class="dot green"></div> = <div class="dot yellow"></div></div>
+                <div class="equation"><div class="dot green"></div> + <div class="dot blue"></div> = <div class="dot cyan"></div></div>
+                <div class="equation"><div class="dot red"></div> + <div class="dot blue"></div> = <div class="dot magenta"></div></div>
+                <div class="equation"><div class="dot red"></div> + <div class="dot green"></div> + <div class="dot blue"></div> = <div class="dot white"></div></div>
+            </div>
+            <!-- Slide 3 -->
+            <div class="tutorial-slide">
+                <h3 style="letter-spacing: 2px;">THE TOOLS</h3>
+                <p style="font-size: 0.8rem; color: #aaa;">Use <b>Undo</b> to step back. Reach 100% accuracy to unlock the next level.</p>
+                <button class="mix-btn r-t" style="pointer-events:none; margin: 10px 0; width:85px; height: 53px;"><div style="color: #888;">RED</div><span class="btn-v">5</span></button>
+                <p style="font-size: 0.6rem; color: #555;">(Counters show your drops)</p>
+            </div>
+        </div>
+        <button class="nav-btn" id="tutorial-btn" onclick="advanceTutorial()" style="width: 100%; margin-top: 20px;">Next</button>
+    </div>
+</div>
     <div class="copyright"> © 2025 HueFlow</div>
 
     <script src="data.js"></script>

@@ -8,10 +8,9 @@ const CONFIG = {
     { id: "medium", name: "Medium", stars: [2, 3], count: 20 },
     { id: "hard", name: "Hard", stars: [3, 4], count: 20 },
     { id: "expert", name: "Expert", stars: [4, 6], count: 20 },
-        { id: "master", name: "Master", stars: [4, 6], count: 20 },
-            { id: "legend", name: "Legend", stars: [4, 6], count: 20 },
+    { id: "master", name: "Master", stars: [4, 6], count: 20 },
+    { id: "legend", name: "Legend", stars: [4, 6], count: 20 },
     { id: "ultimate", name: "Ultimate", stars: [4, 6], count: 20 },
-
   ],
   messages: {
     5: "Masterpiece!",
@@ -41,6 +40,7 @@ const DEFAULTS = {
   daily: {},
   atlas: {},
   barPreference: "result",
+  tutorialSeen: false,
 };
 const savedData = JSON.parse(localStorage.getItem("hf_final_v1")) || {};
 let state = { ...DEFAULTS, ...savedData };
@@ -71,8 +71,15 @@ function router() {
   // --- 1. REDIRECT HOME TO RESUME JOURNEY ---
   if (hash === "#/" || hash === "") {
     resumeJourney();
+    // Trigger Tutorial if first time
+    if (!state.tutorialSeen) {
+      document.getElementById("tutorial-modal").style.display = "flex";
+    } else if (hash === "#/tutorial") {
+      renderTutorialPage();
+    }
     return;
   }
+  if (hash === "#/tutorial") renderTutorialPage();
 
   // --- 2. DYNAMIC NAVIGATION LOGIC ---
   if (
@@ -363,8 +370,11 @@ function handleFail() {
 }
 function handleDailyNav() {
   const now = new Date();
-  const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
-  
+  const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(
+    2,
+    "0"
+  )}-${String(now.getDate()).padStart(2, "0")}`;
+
   if (state.daily[today]) {
     window.location.hash = "#/daily";
   } else {
@@ -372,34 +382,37 @@ function handleDailyNav() {
   }
 }
 function updateDailyButtonVisuals() {
-    // 1. Use local date to avoid timezone "tomorrow" bugs
-    const now = new Date();
-    const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
-    
-    // 2. Find ALL daily buttons (on Home/Free screen and Game screen)
-    const dailyBtns = [
-        document.getElementById("daily-nav-btn"), // Button on Free Play screen
-        document.getElementById("game-daily-btn") // Button on Journey/Game screen
-    ];
+  // 1. Use local date to avoid timezone "tomorrow" bugs
+  const now = new Date();
+  const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(
+    2,
+    "0"
+  )}-${String(now.getDate()).padStart(2, "0")}`;
 
-    const todayRecipe = getSeededDailyRecipe(today);
-    const todayColor = recipeToRGB(todayRecipe);
+  // 2. Find ALL daily buttons (on Home/Free screen and Game screen)
+  const dailyBtns = [
+    document.getElementById("daily-nav-btn"), // Button on Free Play screen
+    document.getElementById("game-daily-btn"), // Button on Journey/Game screen
+  ];
 
-    dailyBtns.forEach(btn => {
-        if (!btn) return;
+  const todayRecipe = getSeededDailyRecipe(today);
+  const todayColor = recipeToRGB(todayRecipe);
 
-        if (state.daily[today]) {
-            btn.style.borderColor = "var(--green-btn)";
-            btn.style.color = "var(--green-btn)";
-            btn.innerText = "Daily Solved ✓";
-            btn.style.boxShadow = "none";
-        } else {
-            btn.style.borderColor = todayColor;
-            btn.style.color = "#fff";
-            btn.innerText = "Daily Challenge";
-            btn.style.boxShadow = `0 0 15px ${todayColor}44`;
-        }
-    });
+  dailyBtns.forEach((btn) => {
+    if (!btn) return;
+
+    if (state.daily[today]) {
+      btn.style.borderColor = "var(--green-btn)";
+      btn.style.color = "var(--green-btn)";
+      btn.innerText = "Daily Solved ✓";
+      btn.style.boxShadow = "none";
+    } else {
+      btn.style.borderColor = todayColor;
+      btn.style.color = "#fff";
+      btn.innerText = "Daily Challenge";
+      btn.style.boxShadow = `0 0 15px ${todayColor}44`;
+    }
+  });
 }
 
 function resetStatus() {
@@ -456,11 +469,11 @@ function loadGame(type, tierId, idx) {
     .querySelectorAll(".subtitle-ui")
     .forEach((el) => (el.innerText = sub));
 
-        const nameEl = document.getElementById("game-color-name");
-    if (nameEl) {
-        // We show the name if it's journey, otherwise empty string for Daily/Free
-        nameEl.innerText = (type === "journey") ? recipe.name : "";
-    }
+  const nameEl = document.getElementById("game-color-name");
+  if (nameEl) {
+    // We show the name if it's journey, otherwise empty string for Daily/Free
+    nameEl.innerText = type === "journey" ? recipe.name : "";
+  }
   showScreen("screen-game");
 }
 
@@ -479,18 +492,51 @@ function renderGameFooter() {
   f.appendChild(btn("Share", () => shareGame()));
   f.appendChild(btn("Undo", () => undo()));
   if (cur.type === "daily") {
-    f.appendChild(btn("Prev", () => navDate(-1)));
+    if (cur.type === "daily") {
+      const todayStr = new Date().toISOString().split("T")[0];
+      const isLaunchDay = cur.id === CONFIG.launchDate;
+      const isToday = cur.id === todayStr;
 
-    f.appendChild(btn("Calendar", () => (window.location.hash = "#/daily")));
-    f.appendChild(btn("Next", () => navDate(1)));
+      // PREV Button
+      const prevBtn = btn("Prev", () => navDate(-1));
+      if (isLaunchDay) prevBtn.disabled = true;
+      f.appendChild(prevBtn);
+
+      f.appendChild(
+        btn("Calendar", () => (window.location.hash = "#/daily"))
+      );
+
+      // NEXT Button
+      const nextBtn = btn("Next", () => navDate(1));
+      if (isToday) nextBtn.disabled = true;
+      f.appendChild(nextBtn);
+    }
   }
 
   //f.appendChild(btn("Solve", () => solveGame(), "var(--gold)"));
 
   if (cur.type === "journey") {
-    f.appendChild(btn("Prev", () => navLevel(-1)));
-    f.appendChild(btn("Levels", () => (window.location.hash = "#/journey")));
-    f.appendChild(btn("Next", () => navLevel(1)));
+    const currentIndex = JOURNEY_DATA.findIndex((l) => l.id === cur.recipe.id);
+    const nextLevel = JOURNEY_DATA[currentIndex + 1];
+
+    // --- PREV BUTTON ---
+    const prevBtn = btn("Prev", () => navLevel(-1));
+    // Disable only if it's the first level of the first tier
+    if (currentIndex === 0) prevBtn.disabled = true;
+    f.appendChild(prevBtn);
+
+    // --- LEVELS (MIDDLE) ---
+    f.appendChild(
+      btn("Levels", () => (window.location.hash = "#/journey"))
+    );
+
+    // --- NEXT BUTTON ---
+    const nextBtn = btn("Next", () => navLevel(1));
+    // Disable if it's the end of the world OR the next tier is locked
+    if (!nextLevel || !state.unlocked.includes(nextLevel.mode)) {
+      nextBtn.disabled = true;
+    }
+    f.appendChild(nextBtn);
   }
 }
 
@@ -530,11 +576,61 @@ function solveGame() {
   updateUI();
 }
 
+// function navLevel(dir) {
+//   const tierLevels = JOURNEY_DATA.filter((l) => l.mode === cur.tierId);
+//   let next = cur.levelIdx + dir;
+//   if (next >= 0 && next < tierLevels.length)
+//     window.location.hash = `#/journey/${cur.tierId}/${next}`;
+// }
+// function navLevel(dir) {
+//   // 1. Find the current level's position in the GLOBAL master list
+//   const currentIndex = JOURNEY_DATA.findIndex(l => l.id === cur.recipe.id);
+//   const nextIndex = currentIndex + dir;
+
+//   // 2. Boundary Check: Is there a level before or after?
+//   if (nextIndex < 0 || nextIndex >= JOURNEY_DATA.length) {
+//     window.location.hash = "#/journey"; // Return to list if at start/end
+//     return;
+//   }
+
+//   const nextLevel = JOURNEY_DATA[nextIndex];
+
+//   // 3. THE GATEKEEPER: Check if the next level's tier is unlocked
+//   if (state.unlocked.includes(nextLevel.mode)) {
+//     // Find the index of this level WITHIN its specific tier (for the URL format)
+//     const tierLevels = JOURNEY_DATA.filter(l => l.mode === nextLevel.mode);
+//     const idxInTier = tierLevels.indexOf(nextLevel);
+
+//     // Navigate to the next level
+//     window.location.hash = `#/journey/${nextLevel.mode}/${idxInTier}`;
+//   } else {
+//     // If the next tier is still locked, go to the Journey screen
+//     // This shows the user they need to finish more levels to progress
+//     window.location.hash = "#/journey";
+//   }
+// }
 function navLevel(dir) {
-  const tierLevels = JOURNEY_DATA.filter((l) => l.mode === cur.tierId);
-  let next = cur.levelIdx + dir;
-  if (next >= 0 && next < tierLevels.length)
-    window.location.hash = `#/journey/${cur.tierId}/${next}`;
+  // 1. Find the current level's position in the GLOBAL master list (1-300)
+  const currentIndex = JOURNEY_DATA.findIndex((l) => l.id === cur.recipe.id);
+  const nextIndex = currentIndex + dir;
+
+  // 2. Boundary Check
+  if (nextIndex < 0 || nextIndex >= JOURNEY_DATA.length) return;
+
+  const nextLevel = JOURNEY_DATA[nextIndex];
+
+  // 3. Gatekeeper Check (Only matters for going FORWARD)
+  if (dir > 0 && !state.unlocked.includes(nextLevel.mode)) {
+    window.location.hash = "#/journey"; // Jump to list if tier is locked
+    return;
+  }
+
+  // 4. Calculate the index within the new tier for the URL
+  const tierLevels = JOURNEY_DATA.filter((l) => l.mode === nextLevel.mode);
+  const idxInTier = tierLevels.indexOf(nextLevel);
+
+  // 5. Navigate
+  window.location.hash = `#/journey/${nextLevel.mode}/${idxInTier}`;
 }
 function navDate(dir) {
   // 1. Parse the current date from the state
@@ -606,13 +702,13 @@ function showScreen(id) {
   if (target) {
     // 3. Force immediate scroll reset before making visible
     target.scrollTop = 0;
-    
+
     // 4. Make the screen visible
     target.classList.add("active");
 
     // 5. Force reflow to ensure scroll takes effect
     void target.offsetHeight;
-    
+
     // 6. Double-check scroll position after render
     requestAnimationFrame(() => {
       target.scrollTop = 0;
@@ -624,7 +720,9 @@ function showScreen(id) {
 
   if (id === "screen-home") {
     initFreePlay();
-    document.querySelectorAll(".subtitle-ui").forEach(el => el.innerText = "FREE PLAY");
+    document
+      .querySelectorAll(".subtitle-ui")
+      .forEach((el) => (el.innerText = "FREE PLAY"));
   }
 }
 function initFreePlay() {
@@ -656,6 +754,10 @@ function initFreePlay() {
 }
 
 function renderJourney() {
+  document
+    .querySelectorAll(".subtitle-ui")
+    .forEach((el) => (el.innerText = "Journey"));
+
   const cont = document.getElementById("journey-content");
   cont.innerHTML = "";
   CONFIG.tiers.forEach((t) => {
@@ -663,7 +765,7 @@ function renderJourney() {
     const solved = tierLevels.filter((l) => state.levels[l.id]).length;
     const header = document.createElement("div");
     header.className = "mode-header";
-    header.innerHTML = `<h2>${t.name.toUpperCase()}</h2><span>${solved}/${
+    header.innerHTML = `<div>${t.name.toUpperCase()}</div><span>${solved}/${
       tierLevels.length
     }</span>`;
     cont.appendChild(header);
@@ -672,28 +774,30 @@ function renderJourney() {
     grid.className = "level-grid";
     if (!state.unlocked.includes(t.id)) grid.style.opacity = "0.1";
 
-tierLevels.forEach((l, i) => {
-    const d = state.levels[l.id];
-    const item = document.createElement("div");
-    item.className = "lvl-item";
-    
-    // Logic: Use l.name from your new JSON structure
-    item.innerHTML = `
-        <div class="lvl-sq ${d ? 'solved' : ''}" 
+    tierLevels.forEach((l, i) => {
+      const d = state.levels[l.id];
+      const item = document.createElement("div");
+      item.className = "lvl-item";
+
+      // Logic: Use l.name from your new JSON structure
+      item.innerHTML = `
+        <div class="lvl-sq ${d ? "solved" : ""}" 
              style="background:${recipeToRGB(l)}" 
-             onclick="if(state.unlocked.includes('${t.id}')) window.location.hash='#/journey/${t.id}/${i}'">
+             onclick="if(state.unlocked.includes('${
+               t.id
+             }')) window.location.hash='#/journey/${t.id}/${i}'">
         </div>
-        <div style="font-size: 0.55rem; color: var(--text-label); margin-top: 4px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">
+        <div class="journey-color-name">
             ${l.name}
         </div>
-        <div class="lvl-stars">${d && d.stars ? '★'.repeat(d.stars) : ''}</div>
+        <div class="lvl-stars">${d && d.stars ? "★".repeat(d.stars) : ""}</div>
     `;
-    grid.appendChild(item);
-});
+      grid.appendChild(item);
+    });
     cont.appendChild(grid);
   });
   showScreen("screen-journey");
-    const screenJourney = document.getElementById("screen-journey");
+  const screenJourney = document.getElementById("screen-journey");
   if (screenJourney) screenJourney.scrollTop = 0;
 }
 
@@ -710,27 +814,30 @@ function renderDaily() {
   ).innerText = `${monthName.toUpperCase()} ${viewingYear}`;
 
   const daysInMonth = new Date(viewingYear, viewingMonth + 1, 0).getDate();
-   const firstDayIndex = new Date(viewingYear, viewingMonth, 1).getDay();
+  const firstDayIndex = new Date(viewingYear, viewingMonth, 1).getDay();
 
   // 1. Padding for start of month (Wrapped in cal-item for symmetry)
   for (let i = 0; i < firstDayIndex; i++) {
     const item = document.createElement("div");
     item.className = "cal-item";
-    
+
     const emptyDay = document.createElement("div");
     emptyDay.className = "cal-day empty";
-    
+
     const emptyStars = document.createElement("div");
     emptyStars.className = "cal-stars-row";
-    
+
     item.appendChild(emptyDay);
     item.appendChild(emptyStars);
     grid.appendChild(item);
   }
- // 2. Real Days
+  // 2. Real Days
   for (let d = 1; d <= daysInMonth; d++) {
-    const dateKey = `${viewingYear}-${String(viewingMonth + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
-    
+    const dateKey = `${viewingYear}-${String(viewingMonth + 1).padStart(
+      2,
+      "0"
+    )}-${String(d).padStart(2, "0")}`;
+
     const item = document.createElement("div");
     item.className = "cal-item";
 
@@ -747,23 +854,23 @@ function renderDaily() {
     const dailyColor = recipeToRGB(dailyRecipe);
 
     if (isFuture || isBeforeLaunch) {
-        day.classList.add("locked");
+      day.classList.add("locked");
     } else {
-        if (solvedData) {
-            day.classList.add("solved");
-            day.style.backgroundColor = solvedData.color || solvedData;
-            day.style.borderColor = "transparent";
-        } else {
-            // UNFINISHED: Apply the target color as a border hint
-            day.classList.add("unfinished");
-            day.style.borderColor = dailyColor;
-            // Add a very subtle inner glow of the target color
-            day.style.boxShadow = `inset 0 0 8px ${dailyColor}33`; 
-        }
-        
-        day.onclick = () => (window.location.hash = `#/daily/${dateKey}`);
+      if (solvedData) {
+        day.classList.add("solved");
+        day.style.backgroundColor = solvedData.color || solvedData;
+        day.style.borderColor = "transparent";
+      } else {
+        // UNFINISHED: Apply the target color as a border hint
+        day.classList.add("unfinished");
+        day.style.borderColor = dailyColor;
+        // Add a very subtle inner glow of the target color
+        day.style.boxShadow = `inset 0 0 8px ${dailyColor}33`;
+      }
+
+      day.onclick = () => (window.location.hash = `#/daily/${dateKey}`);
     }
- const starRow = document.createElement("div");
+    const starRow = document.createElement("div");
     starRow.className = "cal-stars-row";
     if (solvedData && solvedData.stars) {
       starRow.innerText = "★".repeat(solvedData.stars);
@@ -772,7 +879,7 @@ function renderDaily() {
     item.appendChild(day);
     item.appendChild(starRow);
     grid.appendChild(item);
-}
+  }
   showScreen("screen-daily");
 }
 
@@ -988,7 +1095,34 @@ function initProgressToggle() {
     };
   });
 }
-
+function renderTutorialPage() {
+  const grid = document.getElementById("tutorial-grid"); // Reuse grid container
+  grid.innerHTML = `
+        <div style="grid-column: 1/-1; text-align: center; padding: 20px;">
+            <p style="font-size: 0.9rem; margin-bottom: 30px; color: #aaa;">Mixing light (Additive) is different from mixing paint (Subtractive).</p>
+            
+            <div class="tutorial-header">Primary Mixes</div>
+            <div class="equation"><div class="dot red"></div> + <div class="dot green"></div> = <div class="dot yellow"></div> Yellow</div>
+            <div class="equation"><div class="dot green"></div> + <div class="dot blue"></div> = <div class="dot cyan"></div> Cyan</div>
+            <div class="equation"><div class="dot red"></div> + <div class="dot blue"></div> = <div class="dot magenta"></div> Magenta</div>
+            
+            <div class="tutorial-header">The Neutral Balance</div>
+            <div class="equation"><div class="dot red"></div> + <div class="dot green"></div> + <div class="dot blue"></div> = <div class="dot white"></div> White/Gray</div>
+            
+            <p style="font-size: 0.8rem; margin-top: 30px; line-height: 1.6;">
+                <b>Recipe Accuracy:</b> Match the target ratio.<br>
+                <b>Undo:</b> Step back if you add too much of a color.<br>
+                <b>Collection:</b> Every unique match is saved to your Atlas.
+            </p>
+            
+            <button class="nav-btn" style="margin-top: 40px;" onclick="window.location.hash = '#/'">Return to Game</button>
+        </div>
+    `;
+  showScreen("screen-tutorial");
+  document
+    .querySelectorAll(".subtitle-ui")
+    .forEach((el) => (el.innerText = "HOW TO PLAY"));
+}
 function applyBarPreference() {
   const pref = state.barPreference;
   document
@@ -1011,5 +1145,27 @@ function disableButtons(val) {
   buttons.forEach((btn) => {
     if (btn) btn.disabled = val;
   });
+}
+let currentTutorialStep = 0;
+
+function advanceTutorial() {
+  const slides = document.querySelectorAll(".tutorial-slide");
+  slides[currentTutorialStep].classList.remove("active");
+  currentTutorialStep++;
+
+  if (currentTutorialStep < slides.length) {
+    slides[currentTutorialStep].classList.add("active");
+    if (currentTutorialStep === slides.length - 1) {
+      document.getElementById("tutorial-btn").innerText = "Start Journey";
+    }
+  } else {
+    closeTutorial();
+  }
+}
+
+function closeTutorial() {
+  document.getElementById("tutorial-modal").style.display = "none";
+  state.tutorialSeen = true;
+  save();
 }
 router();

@@ -7,7 +7,7 @@
     --text-label: rgba(255, 255, 255, 0.6);
     --accent: #bb86fc;
     --gold: #f1c40f;
-    --white:#ffffff;
+    --white: #ffffff;
     --grey: #888;
     --red-btn: #ff5252;
     --green-btn: #4caf50;
@@ -45,7 +45,7 @@ h1.game-name-ui {
     letter-spacing: 2px;
     color: var(--text-label);
     text-transform: uppercase;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     text-align: center;
     font-weight: bold;
     min-height: 15px;
@@ -57,7 +57,7 @@ h1.game-name-ui {
     max-width: 320px;
     padding: 20px;
     border-radius: 24px;
-    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.6);
+    /* box-shadow: 0 15px 50px rgba(0, 0, 0, 0.6); */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -143,6 +143,14 @@ h1.game-name-ui {
     letter-spacing: 1px;
 }
 
+.action-btn:disabled {
+    opacity: 0.15;
+    /* Very subtle, indicates "End of the line" */
+    cursor: default;
+    border-color: #ebebeb;
+    color: #ffffff !important;
+}
+
 .back-btn {
     position: fixed;
     top: 15px;
@@ -196,10 +204,13 @@ h1.game-name-ui {
     text-transform: uppercase;
     margin: 5px 0 15px 0;
 }
-
+.match-score, .accuracy-label {
+    display: none;
+}
 .progress-area {
     width: 100%;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
+    margin-top: 10px;
 }
 
 .progress-text {
@@ -394,12 +405,16 @@ body.light-theme .subtitle-ui {
     justify-content: center;
     color: #333;
 }
+
 .atlas-sq.found {
-    border-color: rgba(255,255,255,0.1);
-    color: transparent; /* Hide text if found */
+    border-color: rgba(255, 255, 255, 0.1);
+    color: transparent;
+    /* Hide text if found */
 }
+
 .collection-header {
-    grid-column: 1 / -1; /* Spans the full width of the grid */
+    grid-column: 1 / -1;
+    /* Spans the full width of the grid */
     font-size: 0.8rem;
     color: var(--accent);
     margin: 25px 0 10px 0;
@@ -413,14 +428,16 @@ body.light-theme .subtitle-ui {
 .hide-labels .lvl-item div:last-child {
     display: none;
 }
+
 .level-grid.hide-labels {
- gap: 0;
- width: auto;
-     max-width: 80%;
+    gap: 0;
+    width: auto;
+    max-width: 80%;
 }
+
 .hide-labels .lvl-sq {
-     border: 0;
-     border-radius: 0;
+    border: 0;
+    border-radius: 0;
 }
 
 
@@ -455,25 +472,32 @@ body.light-theme .subtitle-ui {
 }
 
 .progress-area {
-    cursor: pointer; /* Indicates the whole area is a toggle */
+    cursor: pointer;
+    /* Indicates the whole area is a toggle */
     user-select: none;
 }
 
 /* Add to styles.css */
 .home-nav-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr; /* Two columns */
+    grid-template-columns: 1fr 1fr;
+    /* Two columns */
     gap: 10px;
-    width: 260px; /* Match your nav-btn width */
+    width: 260px;
+    /* Match your nav-btn width */
     margin-top: 10px;
 }
 
 .home-nav-grid .nav-btn {
-    width: 100%; /* Fill the grid cell */
-    margin: 0;   /* Remove individual margins */
+    width: 100%;
+    /* Fill the grid cell */
+    margin: 0;
+    /* Remove individual margins */
     padding: 10px 0;
-    font-size: 0.7rem; /* Slightly smaller for the utility row */
+    font-size: 0.7rem;
+    /* Slightly smaller for the utility row */
 }
+
 .copyright {
     margin-top: 12px;
     margin-bottom: 12px;
@@ -482,9 +506,11 @@ body.light-theme .subtitle-ui {
     letter-spacing: 1px;
     text-align: center;
 }
+
 /* Update these specific classes */
 .status-area {
-    height: 80px; /* Locked height */
+    height: 80px;
+    /* Locked height */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -499,6 +525,7 @@ body.light-theme .subtitle-ui {
     justify-content: center;
     gap: 10px;
     min-height: 30px;
+    flex-direction: column;
 }
 
 .res-text {
@@ -521,16 +548,28 @@ body.light-theme .subtitle-ui {
 }
 
 /* Hide solve link initially */
-#game-solve-link, #free-solve-link {
+#game-solve-link,
+#free-solve-link {
     display: none;
     margin-top: 10px;
 }
 
 /* Status Text Colors */
-.res-text.win { color: var(--white); }
-.res-text.fail { color: var(--text-dim); }
-.res-text.solved { color: var(--grey); }
-.res-text.info { color: var(--white); }
+.res-text.win {
+    color: var(--white);
+}
+
+.res-text.fail {
+    color: var(--text-dim);
+}
+
+.res-text.solved {
+    color: var(--grey);
+}
+
+.res-text.info {
+    color: var(--white);
+}
 
 
 
@@ -540,7 +579,8 @@ body.light-theme .subtitle-ui {
 /* Container for the Daily Screen */
 #screen-daily {
     width: 100%;
-    max-width: 375px; /* iPhone SE Standard */
+    max-width: 375px;
+    /* iPhone SE Standard */
     margin: 0 auto;
     padding: 0 15px;
     box-sizing: border-box;
@@ -548,8 +588,10 @@ body.light-theme .subtitle-ui {
 
 .calendar-grid {
     display: grid;
-    grid-template-columns: repeat(7, 1fr); /* 7 equal columns */
-    gap: 6px; /* Reduced gap for small screens */
+    grid-template-columns: repeat(7, 1fr);
+    /* 7 equal columns */
+    gap: 6px;
+    /* Reduced gap for small screens */
     width: 100%;
 }
 
@@ -558,12 +600,15 @@ body.light-theme .subtitle-ui {
     flex-direction: column;
     align-items: center;
     width: 100%;
-    min-width: 0; /* Prevents grid blowout */
+    min-width: 0;
+    /* Prevents grid blowout */
 }
 
 .cal-day {
-    width: 100%; /* Fills 1/7th of the grid width */
-    aspect-ratio: 1 / 1; /* Forces perfect square */
+    width: 100%;
+    /* Fills 1/7th of the grid width */
+    aspect-ratio: 1 / 1;
+    /* Forces perfect square */
     border-radius: 10px;
     background: #161616;
     display: flex;
@@ -574,7 +619,8 @@ body.light-theme .subtitle-ui {
     cursor: pointer;
     border: 2px solid #222;
     position: relative;
-    box-sizing: border-box; /* Crucial for border math */
+    box-sizing: border-box;
+    /* Crucial for border math */
 }
 
 /* Ensure empty/padding days have the exact same dimensions */
@@ -585,21 +631,25 @@ body.light-theme .subtitle-ui {
 }
 
 .cal-stars-row {
-    height: 10px; /* Fixed height so rows don't jump */
+    height: 10px;
+    /* Fixed height so rows don't jump */
     font-size: 0.6rem;
     color: var(--gold);
     margin-top: 4px;
     line-height: 10px;
 }
+
 .cal-day.locked {
     color: #888;
 }
 
 .screen {
-    scroll-behavior: auto !important; /* Disables smooth scroll during screen swaps */
+    scroll-behavior: auto !important;
+    /* Disables smooth scroll during screen swaps */
     overflow-y: auto;
-    -webkit-overflow-scrolling: touch; /* Ensures smooth momentum on iPhone */
-        overflow-anchor: none; 
+    -webkit-overflow-scrolling: touch;
+    /* Ensures smooth momentum on iPhone */
+    overflow-anchor: none;
 
 }
 
@@ -612,14 +662,29 @@ body.light-theme .subtitle-ui {
 
 
 .res-color-name {
-    font-size: 0.8rem; /* Slightly larger for the game screen */
-    color: var(--text-label) !important; /* Muted color so it's not a distraction */
+    font-size: 0.8rem;
+    /* Slightly larger for the game screen */
+    color: var(--text-label) !important;
+    /* Muted color so it's not a distraction */
     margin-top: 2px;
     letter-spacing: 1px;
     font-weight: 300;
-    text-transform: capitalize; /* "chocolate" -> "Chocolate" */
-    font-family: inherit; /* Remove monospace to make it feel less like math */
+    text-transform: capitalize;
+    /* "chocolate" -> "Chocolate" */
+    display: none;
 }
+
+.journey-color-name {
+    display: none;
+    font-size: 0.55rem;
+    color: var(--text-label);
+    margin-top: 4px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
+}
+
 .screen {
     display: none;
     flex-direction: column;
@@ -636,4 +701,116 @@ body.light-theme .subtitle-ui {
 .screen.active {
     display: flex;
     scroll-behavior: auto !important;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 2000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: var(--vessel);
+    text-align: center;
+    border: 1px solid #333;
+}
+
+.modal-content p {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--text-label);
+    margin: 20px 0;
+}
+
+#tutorial-slides .slide {
+    display: none;
+}
+
+#tutorial-slides .slide.active {
+    display: block;
+}
+
+/* Modal Overlay */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 5000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: #1a1a1a;
+    width: 300px;
+    padding: 30px;
+    border-radius: 24px;
+    text-align: center;
+    border: 1px solid #333;
+}
+
+.tutorial-slide {
+    display: none;
+}
+
+.tutorial-slide.active {
+    display: block;
+    animation: fadeIn 0.4s ease;
+}
+
+/* Color Equations */
+.equation {
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
+    gap: 8px;
+    margin: 15px 0;
+    font-weight: bold;
+    font-family: monospace;
+}
+
+.dot {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dot.red {
+    background: var(--red-btn);
+}
+
+.dot.green {
+    background: var(--green-btn);
+}
+
+.dot.blue {
+    background: var(--blue-btn);
+}
+
+.dot.yellow {
+    background: #ffff00;
+}
+
+.dot.cyan {
+    background: #00ffff;
+}
+
+.dot.magenta {
+    background: #ff00ff;
+}
+
+.dot.white {
+    background: #ffffff;
 }
