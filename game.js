@@ -3,11 +3,15 @@ const CONFIG = {
   launchDate: "2025-11-01",
   step: 25,
   tiers: [
-    { id: "training", name: "Training", stars: [0, 1], count: 12 },
-    { id: "easy", name: "Easy", stars: [1, 2], count: 30 },
-    { id: "med", name: "Medium", stars: [2, 3], count: 40 },
-    { id: "hard", name: "Hard", stars: [3, 4], count: 50 },
-    { id: "master", name: "Master", stars: [4, 6], count: 50 },
+    { id: "training", name: "Training", stars: [0, 1], count: 10 },
+    { id: "easy", name: "Easy", stars: [1, 2], count: 20 },
+    { id: "medium", name: "Medium", stars: [2, 3], count: 20 },
+    { id: "hard", name: "Hard", stars: [3, 4], count: 20 },
+    { id: "expert", name: "Expert", stars: [4, 6], count: 20 },
+        { id: "master", name: "Master", stars: [4, 6], count: 20 },
+            { id: "legend", name: "Legend", stars: [4, 6], count: 20 },
+    { id: "ultimate", name: "Ultimate", stars: [4, 6], count: 20 },
+
   ],
   messages: {
     5: "Masterpiece!",
@@ -451,6 +455,12 @@ function loadGame(type, tierId, idx) {
   document
     .querySelectorAll(".subtitle-ui")
     .forEach((el) => (el.innerText = sub));
+
+        const nameEl = document.getElementById("game-color-name");
+    if (nameEl) {
+        // We show the name if it's journey, otherwise empty string for Daily/Free
+        nameEl.innerText = (type === "journey") ? recipe.name : "";
+    }
   showScreen("screen-game");
 }
 
@@ -553,26 +563,63 @@ function navDate(dir) {
 //   document.getElementById(id).classList.add("active");
 //   if (id === "screen-home") initFreePlay();
 // }
+// function showScreen(id) {
+//   // 1. Hide all screens
+//   document.querySelectorAll(".screen").forEach((s) => {
+//     s.classList.remove("active");
+//   });
+
+//   const target = document.getElementById(id);
+//   if (target) {
+//     target.classList.add("active");
+
+//     // 2. Aggressive scroll reset
+//     // This handles both the internal div scroll and the mobile body scroll
+//     target.scrollTop = 0;
+//     window.scrollTo(0, 0);
+
+//     // 3. Fallback for browsers that "remember" scroll position too well
+//     setTimeout(() => {
+//       target.scrollTop = 0;
+//       window.scrollTo(0, 0);
+//     }, 10);
+//   }
+
+//   if (id === "screen-home") {
+//     initFreePlay();
+//     document.querySelectorAll(".subtitle-ui").forEach(el => el.innerText = "FREE PLAY");
+//   }
+// }
 function showScreen(id) {
-  // 1. Hide all screens
+  // 1. Reset ALL screens' scroll position before hiding them
   document.querySelectorAll(".screen").forEach((s) => {
+    s.scrollTop = 0;
     s.classList.remove("active");
   });
 
+  // 2. Reset window scroll
+  window.scrollTo(0, 0);
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+
   const target = document.getElementById(id);
   if (target) {
+    // 3. Force immediate scroll reset before making visible
+    target.scrollTop = 0;
+    
+    // 4. Make the screen visible
     target.classList.add("active");
 
-    // 2. Aggressive scroll reset
-    // This handles both the internal div scroll and the mobile body scroll
-    target.scrollTop = 0;
-    window.scrollTo(0, 0);
-
-    // 3. Fallback for browsers that "remember" scroll position too well
-    setTimeout(() => {
+    // 5. Force reflow to ensure scroll takes effect
+    void target.offsetHeight;
+    
+    // 6. Double-check scroll position after render
+    requestAnimationFrame(() => {
       target.scrollTop = 0;
       window.scrollTo(0, 0);
-    }, 10);
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+    });
   }
 
   if (id === "screen-home") {
@@ -625,23 +672,24 @@ function renderJourney() {
     grid.className = "level-grid";
     if (!state.unlocked.includes(t.id)) grid.style.opacity = "0.1";
 
-    tierLevels.forEach((l, i) => {
-      const d = state.levels[l.id];
-      const item = document.createElement("div");
-      item.className = "lvl-item";
-      item.innerHTML = `<div class="lvl-sq ${
-        d ? "solved" : ""
-      }" style="background:${recipeToRGB(
-        l
-      )}" onclick="if(state.unlocked.includes('${
-        t.id
-      }')) window.location.hash='#/journey/${
-        t.id
-      }/${i}'"></div><div class="lvl-stars">${
-        d && d.stars ? "★".repeat(d.stars) : ""
-      }</div>`;
-      grid.appendChild(item);
-    });
+tierLevels.forEach((l, i) => {
+    const d = state.levels[l.id];
+    const item = document.createElement("div");
+    item.className = "lvl-item";
+    
+    // Logic: Use l.name from your new JSON structure
+    item.innerHTML = `
+        <div class="lvl-sq ${d ? 'solved' : ''}" 
+             style="background:${recipeToRGB(l)}" 
+             onclick="if(state.unlocked.includes('${t.id}')) window.location.hash='#/journey/${t.id}/${i}'">
+        </div>
+        <div style="font-size: 0.55rem; color: var(--text-label); margin-top: 4px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">
+            ${l.name}
+        </div>
+        <div class="lvl-stars">${d && d.stars ? '★'.repeat(d.stars) : ''}</div>
+    `;
+    grid.appendChild(item);
+});
     cont.appendChild(grid);
   });
   showScreen("screen-journey");

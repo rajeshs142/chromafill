@@ -28,19 +28,6 @@ html {
     transition: background-color 1.2s ease;
 }
 
-.screen {
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    /* min-height: 100vh; */
-    /* padding: 15px; */
-    box-sizing: border-box;
-    overflow-y: auto;
-}
-
-.screen.active {
-    display: flex;
-}
 
 h1.game-name-ui {
     font-weight: 200;
@@ -622,6 +609,31 @@ body.light-theme .subtitle-ui {
     width: 100%;
 }
 
+
+
+.res-color-name {
+    font-size: 0.8rem; /* Slightly larger for the game screen */
+    color: var(--text-label) !important; /* Muted color so it's not a distraction */
+    margin-top: 2px;
+    letter-spacing: 1px;
+    font-weight: 300;
+    text-transform: capitalize; /* "chocolate" -> "Chocolate" */
+    font-family: inherit; /* Remove monospace to make it feel less like math */
+}
+.screen {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    /* min-height: 100vh; */
+    /* padding: 15px; */
+    box-sizing: border-box;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: relative;
+    width: 100%;
+}
+
 .screen.active {
     display: flex;
+    scroll-behavior: auto !important;
 }

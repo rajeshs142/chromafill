@@ -1,1594 +1,1729 @@
 const JOURNEY_DATA = [
   {
-    "id": "tr_1",
-    "name": "Pure_White_Tint",
+    "id": "1",
+    "name": "Orange",
+    "gen_name": "r1g1b0",
     "r": 1,
     "g": 1,
-    "b": 1,
-    "mode": "training"
+    "b": 0,
+    "mode": "training",
+    "difficulty": 1,
+    "dropcount": 2
   },
   {
-    "id": "tr_2",
-    "name": "Soft_Red_with_Green",
-    "r": 2,
+    "id": "2",
+    "name": "Cyan",
+    "gen_name": "r0g1b1",
+    "r": 0,
     "g": 1,
     "b": 1,
-    "mode": "easy"
+    "mode": "training",
+    "difficulty": 2,
+    "dropcount": 2
   },
   {
-    "id": "tr_3",
-    "name": "Soft_Green_with_Red",
+    "id": "3",
+    "name": "Magenta",
+    "gen_name": "r1g0b1",
+    "r": 1,
+    "g": 0,
+    "b": 1,
+    "mode": "training",
+    "difficulty": 3,
+    "dropcount": 2
+  },
+  {
+    "id": "4",
+    "name": "Red",
+    "gen_name": "r2g0b0",
+    "r": 2,
+    "g": 0,
+    "b": 0,
+    "mode": "training",
+    "difficulty": 4,
+    "dropcount": 2
+  },
+  {
+    "id": "5",
+    "name": "Green",
+    "gen_name": "r0g2b0",
+    "r": 0,
+    "g": 2,
+    "b": 0,
+    "mode": "training",
+    "difficulty": 5,
+    "dropcount": 2
+  },
+  {
+    "id": "6",
+    "name": "Blue",
+    "gen_name": "r0g0b2",
+    "r": 0,
+    "g": 0,
+    "b": 2,
+    "mode": "training",
+    "difficulty": 6,
+    "dropcount": 2
+  },
+  {
+    "id": "7",
+    "name": "Orange",
+    "gen_name": "r2g1b0",
+    "r": 2,
+    "g": 1,
+    "b": 0,
+    "mode": "training",
+    "difficulty": 1,
+    "dropcount": 3
+  },
+  {
+    "id": "8",
+    "name": "Lime",
+    "gen_name": "r1g2b0",
     "r": 1,
     "g": 2,
-    "b": 1,
-    "mode": "easy"
+    "b": 0,
+    "mode": "training",
+    "difficulty": 2,
+    "dropcount": 3
   },
   {
-    "id": "tr_4",
-    "name": "Soft_Blue_with_Red",
+    "id": "9",
+    "name": "Cyan",
+    "gen_name": "r0g2b1",
+    "r": 0,
+    "g": 2,
+    "b": 1,
+    "mode": "training",
+    "difficulty": 3,
+    "dropcount": 3
+  },
+  {
+    "id": "10",
+    "name": "Blue",
+    "gen_name": "r0g1b2",
+    "r": 0,
+    "g": 1,
+    "b": 2,
+    "mode": "training",
+    "difficulty": 4,
+    "dropcount": 3
+  },
+  {
+    "id": "11",
+    "name": "Pink",
+    "gen_name": "r2g0b1",
+    "r": 2,
+    "g": 0,
+    "b": 1,
+    "mode": "easy",
+    "difficulty": 5,
+    "dropcount": 3
+  },
+  {
+    "id": "12",
+    "name": "Purple",
+    "gen_name": "r1g0b2",
+    "r": 1,
+    "g": 0,
+    "b": 2,
+    "mode": "easy",
+    "difficulty": 6,
+    "dropcount": 3
+  },
+  {
+    "id": "13",
+    "name": "Red",
+    "gen_name": "r3g0b0",
+    "r": 3,
+    "g": 0,
+    "b": 0,
+    "mode": "easy",
+    "difficulty": 7,
+    "dropcount": 3
+  },
+  {
+    "id": "14",
+    "name": "Green",
+    "gen_name": "r0g3b0",
+    "r": 0,
+    "g": 3,
+    "b": 0,
+    "mode": "easy",
+    "difficulty": 8,
+    "dropcount": 3
+  },
+  {
+    "id": "15",
+    "name": "Deep Blue",
+    "gen_name": "r0g0b3",
+    "r": 0,
+    "g": 0,
+    "b": 3,
+    "mode": "easy",
+    "difficulty": 9,
+    "dropcount": 3
+  },
+  {
+    "id": "16",
+    "name": "Gray",
+    "gen_name": "r1g1b1",
     "r": 1,
     "g": 1,
-    "b": 2,
-    "mode": "easy"
+    "b": 1,
+    "mode": "easy",
+    "difficulty": 10,
+    "dropcount": 3
   },
   {
-    "id": "tr_7",
-    "name": "Soft_Red_with_Blue",
-    "r": 2,
-    "g": 1,
-    "b": 2,
-    "mode": "easy"
-  },
-  {
-    "id": "tr_5",
-    "name": "Soft_Red_with_Green",
+    "id": "17",
+    "name": "Burnt Orange",
+    "gen_name": "r3g1b0",
     "r": 3,
     "g": 1,
-    "b": 1,
-    "mode": "easy"
+    "b": 0,
+    "mode": "easy",
+    "difficulty": 11,
+    "dropcount": 4
   },
   {
-    "id": "tr_6",
-    "name": "Soft_Red_with_Green",
+    "id": "18",
+    "name": "Yellow",
+    "gen_name": "r2g2b0",
     "r": 2,
     "g": 2,
-    "b": 1,
-    "mode": "easy"
+    "b": 0,
+    "mode": "easy",
+    "difficulty": 12,
+    "dropcount": 4
   },
   {
-    "id": "tr_8",
-    "name": "Soft_Green_with_Red",
+    "id": "19",
+    "name": "Chartreuse",
+    "gen_name": "r1g3b0",
     "r": 1,
     "g": 3,
-    "b": 1,
-    "mode": "easy"
+    "b": 0,
+    "mode": "easy",
+    "difficulty": 13,
+    "dropcount": 4
   },
   {
-    "id": "tr_9",
-    "name": "Soft_Green_with_Blue",
-    "r": 1,
-    "g": 2,
-    "b": 2,
-    "mode": "easy"
-  },
-  {
-    "id": "tr_10",
-    "name": "Soft_Blue_with_Red",
-    "r": 1,
-    "g": 1,
-    "b": 3,
-    "mode": "easy"
-  },
-  {
-    "id": "tr_13",
-    "name": "Soft_Red_with_Blue",
-    "r": 3,
-    "g": 1,
-    "b": 2,
-    "mode": "easy"
-  },
-  {
-    "id": "tr_12",
-    "name": "Soft_Red_with_Green",
-    "r": 3,
-    "g": 2,
-    "b": 1,
-    "mode": "easy"
-  },
-  {
-    "id": "tr_14",
-    "name": "Soft_Green_with_Red",
-    "r": 2,
+    "id": "20",
+    "name": "Aqua",
+    "gen_name": "r0g3b1",
+    "r": 0,
     "g": 3,
     "b": 1,
-    "mode": "easy"
+    "mode": "easy",
+    "difficulty": 14,
+    "dropcount": 4
   },
   {
-    "id": "tr_17",
-    "name": "Soft_Green_with_Blue",
-    "r": 1,
-    "g": 3,
+    "id": "21",
+    "name": "Turquoise",
+    "gen_name": "r0g2b2",
+    "r": 0,
+    "g": 2,
     "b": 2,
-    "mode": "easy"
+    "mode": "easy",
+    "difficulty": 15,
+    "dropcount": 4
   },
   {
-    "id": "tr_15",
-    "name": "Soft_Blue_with_Red",
-    "r": 2,
+    "id": "22",
+    "name": "Ocean Blue",
+    "gen_name": "r0g1b3",
+    "r": 0,
     "g": 1,
     "b": 3,
-    "mode": "easy"
+    "mode": "easy",
+    "difficulty": 16,
+    "dropcount": 4
   },
   {
-    "id": "tr_25",
-    "name": "Soft_Red_with_Blue",
+    "id": "23",
+    "name": "Rose",
+    "gen_name": "r3g0b1",
     "r": 3,
-    "g": 1,
-    "b": 3,
-    "mode": "med"
+    "g": 0,
+    "b": 1,
+    "mode": "easy",
+    "difficulty": 17,
+    "dropcount": 4
   },
   {
-    "id": "tr_22",
-    "name": "Pale_Red_Tone",
+    "id": "24",
+    "name": "Magenta",
+    "gen_name": "r2g0b2",
+    "r": 2,
+    "g": 0,
+    "b": 2,
+    "mode": "easy",
+    "difficulty": 18,
+    "dropcount": 4
+  },
+  {
+    "id": "25",
+    "name": "Violet",
+    "gen_name": "r1g0b3",
+    "r": 1,
+    "g": 0,
+    "b": 3,
+    "mode": "easy",
+    "difficulty": 19,
+    "dropcount": 4
+  },
+  {
+    "id": "26",
+    "name": "Crimson",
+    "gen_name": "r4g0b0",
+    "r": 4,
+    "g": 0,
+    "b": 0,
+    "mode": "easy",
+    "difficulty": 20,
+    "dropcount": 4
+  },
+  {
+    "id": "27",
+    "name": "Rust",
+    "gen_name": "r4g1b0",
     "r": 4,
     "g": 1,
-    "b": 2,
-    "mode": "med"
+    "b": 0,
+    "mode": "easy",
+    "difficulty": 21,
+    "dropcount": 5
   },
   {
-    "id": "tr_24",
-    "name": "Light_Red-Green_Tint",
+    "id": "28",
+    "name": "Gold",
+    "gen_name": "r3g2b0",
     "r": 3,
     "g": 2,
-    "b": 2,
-    "mode": "med"
+    "b": 0,
+    "mode": "easy",
+    "difficulty": 22,
+    "dropcount": 5
   },
   {
-    "id": "tr_21",
-    "name": "Pale_Red_Tone",
-    "r": 4,
-    "g": 2,
-    "b": 1,
-    "mode": "med"
-  },
-  {
-    "id": "tr_23",
-    "name": "Soft_Red_with_Green",
-    "r": 3,
-    "g": 3,
-    "b": 1,
-    "mode": "med"
-  },
-  {
-    "id": "tr_26",
-    "name": "Pale_Green_Tone",
+    "id": "29",
+    "name": "Yellow Green",
+    "gen_name": "r2g3b0",
     "r": 2,
+    "g": 3,
+    "b": 0,
+    "mode": "easy",
+    "difficulty": 23,
+    "dropcount": 5
+  },
+  {
+    "id": "30",
+    "name": "Lime",
+    "gen_name": "r1g4b0",
+    "r": 1,
+    "g": 4,
+    "b": 0,
+    "mode": "easy",
+    "difficulty": 24,
+    "dropcount": 5
+  },
+  {
+    "id": "31",
+    "name": "Emerald",
+    "gen_name": "r0g4b0",
+    "r": 0,
+    "g": 4,
+    "b": 0,
+    "mode": "medium",
+    "difficulty": 25,
+    "dropcount": 4
+  },
+  {
+    "id": "32",
+    "name": "Teal",
+    "gen_name": "r0g4b1",
+    "r": 0,
     "g": 4,
     "b": 1,
-    "mode": "med"
+    "mode": "medium",
+    "difficulty": 26,
+    "dropcount": 5
   },
   {
-    "id": "tr_27",
-    "name": "Light_Green-Red_Tint",
-    "r": 2,
+    "id": "33",
+    "name": "Caribbean",
+    "gen_name": "r0g3b2",
+    "r": 0,
     "g": 3,
     "b": 2,
-    "mode": "med"
+    "mode": "medium",
+    "difficulty": 27,
+    "dropcount": 5
   },
   {
-    "id": "tr_32",
-    "name": "Soft_Green_with_Blue",
+    "id": "34",
+    "name": "Azure",
+    "gen_name": "r0g2b3",
+    "r": 0,
+    "g": 2,
+    "b": 3,
+    "mode": "medium",
+    "difficulty": 28,
+    "dropcount": 5
+  },
+  {
+    "id": "35",
+    "name": "Navy",
+    "gen_name": "r0g1b4",
+    "r": 0,
+    "g": 1,
+    "b": 4,
+    "mode": "medium",
+    "difficulty": 29,
+    "dropcount": 5
+  },
+  {
+    "id": "36",
+    "name": "Sapphire",
+    "gen_name": "r0g0b4",
+    "r": 0,
+    "g": 0,
+    "b": 4,
+    "mode": "medium",
+    "difficulty": 30,
+    "dropcount": 4
+  },
+  {
+    "id": "37",
+    "name": "Coral",
+    "gen_name": "r4g0b1",
+    "r": 4,
+    "g": 0,
+    "b": 1,
+    "mode": "medium",
+    "difficulty": 31,
+    "dropcount": 5
+  },
+  {
+    "id": "38",
+    "name": "Hot Pink",
+    "gen_name": "r3g0b2",
+    "r": 3,
+    "g": 0,
+    "b": 2,
+    "mode": "medium",
+    "difficulty": 32,
+    "dropcount": 5
+  },
+  {
+    "id": "39",
+    "name": "Purple",
+    "gen_name": "r2g0b3",
+    "r": 2,
+    "g": 0,
+    "b": 3,
+    "mode": "medium",
+    "difficulty": 33,
+    "dropcount": 5
+  },
+  {
+    "id": "40",
+    "name": "Indigo",
+    "gen_name": "r1g0b4",
+    "r": 1,
+    "g": 0,
+    "b": 4,
+    "mode": "medium",
+    "difficulty": 34,
+    "dropcount": 5
+  },
+  {
+    "id": "41",
+    "name": "Terra Cotta",
+    "gen_name": "r3g1b1",
+    "r": 3,
+    "g": 1,
+    "b": 1,
+    "mode": "medium",
+    "difficulty": 35,
+    "dropcount": 5
+  },
+  {
+    "id": "42",
+    "name": "Mint",
+    "gen_name": "r1g3b1",
     "r": 1,
     "g": 3,
-    "b": 3,
-    "mode": "med"
+    "b": 1,
+    "mode": "medium",
+    "difficulty": 36,
+    "dropcount": 5
   },
   {
-    "id": "tr_33",
-    "name": "Pale_Blue_Tone",
+    "id": "43",
+    "name": "Periwinkle",
+    "gen_name": "r1g1b3",
     "r": 1,
-    "g": 2,
-    "b": 4,
-    "mode": "med"
-  },
-  {
-    "id": "tr_28",
-    "name": "Light_Blue-Red_Tint",
-    "r": 2,
-    "g": 2,
-    "b": 3,
-    "mode": "med"
-  },
-  {
-    "id": "tr_29",
-    "name": "Pale_Blue_Tone",
-    "r": 2,
-    "g": 1,
-    "b": 4,
-    "mode": "med"
-  },
-  {
-    "id": "tr_39",
-    "name": "Pale_Red_Tone",
-    "r": 4,
     "g": 1,
     "b": 3,
-    "mode": "med"
+    "mode": "medium",
+    "difficulty": 37,
+    "dropcount": 5
   },
   {
-    "id": "tr_42",
-    "name": "Light_Red-Blue_Tint",
-    "r": 3,
-    "g": 2,
-    "b": 3,
-    "mode": "med"
-  },
-  {
-    "id": "tr_36",
-    "name": "Pale_Red_Tone",
+    "id": "44",
+    "name": "Persimmon",
+    "gen_name": "r5g1b0",
     "r": 5,
-    "g": 2,
-    "b": 1,
-    "mode": "med"
+    "g": 1,
+    "b": 0,
+    "mode": "medium",
+    "difficulty": 38,
+    "dropcount": 6
   },
   {
-    "id": "tr_41",
-    "name": "Light_Red-Green_Tint",
-    "r": 3,
-    "g": 3,
-    "b": 2,
-    "mode": "med"
-  },
-  {
-    "id": "tr_38",
-    "name": "Pale_Red_Tone",
+    "id": "45",
+    "name": "Amber",
+    "gen_name": "r4g2b0",
     "r": 4,
-    "g": 3,
-    "b": 1,
-    "mode": "med"
+    "g": 2,
+    "b": 0,
+    "mode": "medium",
+    "difficulty": 39,
+    "dropcount": 6
   },
   {
-    "id": "tr_40",
-    "name": "Pale_Green_Tone",
+    "id": "46",
+    "name": "Mustard",
+    "gen_name": "r3g3b0",
     "r": 3,
+    "g": 3,
+    "b": 0,
+    "mode": "medium",
+    "difficulty": 40,
+    "dropcount": 6
+  },
+  {
+    "id": "47",
+    "name": "Lime Gold",
+    "gen_name": "r2g4b0",
+    "r": 2,
     "g": 4,
-    "b": 1,
-    "mode": "med"
+    "b": 0,
+    "mode": "medium",
+    "difficulty": 41,
+    "dropcount": 6
   },
   {
-    "id": "tr_45",
-    "name": "Light_Green-Blue_Tint",
-    "r": 2,
-    "g": 3,
-    "b": 3,
-    "mode": "med"
-  },
-  {
-    "id": "tr_49",
-    "name": "Pale_Green_Tone",
+    "id": "48",
+    "name": "Spring Green",
+    "gen_name": "r1g5b0",
     "r": 1,
-    "g": 4,
-    "b": 3,
-    "mode": "med"
+    "g": 5,
+    "b": 0,
+    "mode": "medium",
+    "difficulty": 42,
+    "dropcount": 6
   },
   {
-    "id": "tr_46",
-    "name": "Pale_Blue_Tone",
-    "r": 2,
-    "g": 1,
-    "b": 5,
-    "mode": "med"
-  },
-  {
-    "id": "tr_62",
-    "name": "Pale_Red_Tone",
-    "r": 4,
-    "g": 1,
-    "b": 4,
-    "mode": "med"
-  },
-  {
-    "id": "tr_61",
-    "name": "Soft_Red_with_Blue",
-    "r": 4,
-    "g": 2,
-    "b": 3,
-    "mode": "med"
-  },
-  {
-    "id": "tr_57",
-    "name": "Soft_Red_with_Green",
-    "r": 5,
-    "g": 2,
-    "b": 2,
-    "mode": "med"
-  },
-  {
-    "id": "tr_56",
-    "name": "Pale_Red_Tone",
-    "r": 5,
-    "g": 3,
-    "b": 1,
-    "mode": "med"
-  },
-  {
-    "id": "tr_63",
-    "name": "Pale_Green_Tone",
-    "r": 3,
+    "id": "49",
+    "name": "Aquamarine",
+    "gen_name": "r0g5b1",
+    "r": 0,
     "g": 5,
     "b": 1,
-    "mode": "med"
+    "mode": "medium",
+    "difficulty": 43,
+    "dropcount": 6
   },
   {
-    "id": "tr_64",
-    "name": "Soft_Green_with_Red",
-    "r": 3,
+    "id": "50",
+    "name": "Teal Blue",
+    "gen_name": "r0g4b2",
+    "r": 0,
     "g": 4,
     "b": 2,
-    "mode": "med"
+    "mode": "medium",
+    "difficulty": 44,
+    "dropcount": 6
   },
   {
-    "id": "tr_69",
-    "name": "Soft_Green_with_Blue",
-    "r": 2,
-    "g": 4,
-    "b": 3,
-    "mode": "med"
-  },
-  {
-    "id": "tr_75",
-    "name": "Pale_Green_Tone",
-    "r": 1,
-    "g": 5,
-    "b": 3,
-    "mode": "med"
-  },
-  {
-    "id": "tr_76",
-    "name": "Pale_Green_Tone",
-    "r": 1,
-    "g": 4,
-    "b": 4,
-    "mode": "med"
-  },
-  {
-    "id": "tr_70",
-    "name": "Soft_Blue_with_Green",
-    "r": 2,
+    "id": "51",
+    "name": "Pacific",
+    "gen_name": "r0g3b3",
+    "r": 0,
     "g": 3,
-    "b": 4,
-    "mode": "med"
+    "b": 3,
+    "mode": "hard",
+    "difficulty": 45,
+    "dropcount": 6
   },
   {
-    "id": "tr_71",
-    "name": "Soft_Blue_with_Red",
-    "r": 2,
+    "id": "52",
+    "name": "Steel Blue",
+    "gen_name": "r0g2b4",
+    "r": 0,
     "g": 2,
-    "b": 5,
-    "mode": "med"
+    "b": 4,
+    "mode": "hard",
+    "difficulty": 46,
+    "dropcount": 6
   },
   {
-    "id": "tr_72",
-    "name": "Pale_Blue_Tone",
-    "r": 2,
+    "id": "53",
+    "name": "Cobalt",
+    "gen_name": "r0g1b5",
+    "r": 0,
     "g": 1,
-    "b": 6,
-    "mode": "med"
+    "b": 5,
+    "mode": "hard",
+    "difficulty": 47,
+    "dropcount": 6
   },
   {
-    "id": "tr_65",
-    "name": "Soft_Blue_with_Red",
+    "id": "54",
+    "name": "Salmon",
+    "gen_name": "r5g0b1",
+    "r": 5,
+    "g": 0,
+    "b": 1,
+    "mode": "hard",
+    "difficulty": 48,
+    "dropcount": 6
+  },
+  {
+    "id": "55",
+    "name": "Rose Pink",
+    "gen_name": "r4g0b2",
+    "r": 4,
+    "g": 0,
+    "b": 2,
+    "mode": "hard",
+    "difficulty": 49,
+    "dropcount": 6
+  },
+  {
+    "id": "56",
+    "name": "Fuchsia",
+    "gen_name": "r3g0b3",
+    "r": 3,
+    "g": 0,
+    "b": 3,
+    "mode": "hard",
+    "difficulty": 50,
+    "dropcount": 6
+  },
+  {
+    "id": "57",
+    "name": "Violet Blue",
+    "gen_name": "r2g0b4",
+    "r": 2,
+    "g": 0,
+    "b": 4,
+    "mode": "hard",
+    "difficulty": 51,
+    "dropcount": 6
+  },
+  {
+    "id": "58",
+    "name": "Deep Purple",
+    "gen_name": "r1g0b5",
+    "r": 1,
+    "g": 0,
+    "b": 5,
+    "mode": "hard",
+    "difficulty": 52,
+    "dropcount": 6
+  },
+  {
+    "id": "59",
+    "name": "Tan",
+    "gen_name": "r3g2b1",
     "r": 3,
     "g": 2,
-    "b": 4,
-    "mode": "med"
+    "b": 1,
+    "mode": "hard",
+    "difficulty": 53,
+    "dropcount": 6
   },
   {
-    "id": "tr_88",
-    "name": "Pale_Red_Tone",
-    "r": 5,
+    "id": "60",
+    "name": "Sage",
+    "gen_name": "r2g3b1",
+    "r": 2,
+    "g": 3,
+    "b": 1,
+    "mode": "hard",
+    "difficulty": 54,
+    "dropcount": 6
+  },
+  {
+    "id": "61",
+    "name": "Seafoam",
+    "gen_name": "r1g3b2",
+    "r": 1,
+    "g": 3,
+    "b": 2,
+    "mode": "hard",
+    "difficulty": 55,
+    "dropcount": 6
+  },
+  {
+    "id": "62",
+    "name": "Lavender",
+    "gen_name": "r2g1b3",
+    "r": 2,
     "g": 1,
-    "b": 4,
-    "mode": "hard"
+    "b": 3,
+    "mode": "hard",
+    "difficulty": 56,
+    "dropcount": 6
   },
   {
-    "id": "tr_84",
-    "name": "Pale_Red_Tone",
+    "id": "63",
+    "name": "Slate",
+    "gen_name": "r2g2b2",
+    "r": 2,
+    "g": 2,
+    "b": 2,
+    "mode": "hard",
+    "difficulty": 57,
+    "dropcount": 6
+  },
+  {
+    "id": "64",
+    "name": "Burnt Sienna",
+    "gen_name": "r6g1b0",
     "r": 6,
     "g": 1,
-    "b": 3,
-    "mode": "hard"
+    "b": 0,
+    "mode": "hard",
+    "difficulty": 58,
+    "dropcount": 7
   },
   {
-    "id": "tr_87",
-    "name": "Soft_Red_with_Blue",
+    "id": "65",
+    "name": "Bronze",
+    "gen_name": "r5g2b0",
     "r": 5,
     "g": 2,
-    "b": 3,
-    "mode": "hard"
+    "b": 0,
+    "mode": "hard",
+    "difficulty": 59,
+    "dropcount": 7
   },
   {
-    "id": "tr_90",
-    "name": "Light_Red-Green_Tint",
+    "id": "66",
+    "name": "Olive Gold",
+    "gen_name": "r4g3b0",
     "r": 4,
     "g": 3,
-    "b": 3,
-    "mode": "hard"
+    "b": 0,
+    "mode": "hard",
+    "difficulty": 60,
+    "dropcount": 7
   },
   {
-    "id": "tr_86",
-    "name": "Soft_Red_with_Green",
-    "r": 5,
-    "g": 3,
-    "b": 2,
-    "mode": "hard"
-  },
-  {
-    "id": "tr_89",
-    "name": "Pale_Green_Tone",
-    "r": 4,
-    "g": 5,
-    "b": 1,
-    "mode": "hard"
-  },
-  {
-    "id": "tr_92",
-    "name": "Pale_Green_Tone",
+    "id": "67",
+    "name": "Pistachio",
+    "gen_name": "r3g4b0",
     "r": 3,
+    "g": 4,
+    "b": 0,
+    "mode": "hard",
+    "difficulty": 61,
+    "dropcount": 7
+  },
+  {
+    "id": "68",
+    "name": "Leaf Green",
+    "gen_name": "r2g5b0",
+    "r": 2,
+    "g": 5,
+    "b": 0,
+    "mode": "hard",
+    "difficulty": 62,
+    "dropcount": 7
+  },
+  {
+    "id": "69",
+    "name": "Forest Green",
+    "gen_name": "r1g6b0",
+    "r": 1,
+    "g": 6,
+    "b": 0,
+    "mode": "hard",
+    "difficulty": 63,
+    "dropcount": 7
+  },
+  {
+    "id": "70",
+    "name": "Jade",
+    "gen_name": "r0g6b1",
+    "r": 0,
     "g": 6,
     "b": 1,
-    "mode": "hard"
+    "mode": "hard",
+    "difficulty": 64,
+    "dropcount": 7
   },
   {
-    "id": "tr_93",
-    "name": "Soft_Green_with_Red",
-    "r": 3,
+    "id": "71",
+    "name": "Mint Teal",
+    "gen_name": "r0g5b2",
+    "r": 0,
     "g": 5,
     "b": 2,
-    "mode": "hard"
+    "mode": "expert",
+    "difficulty": 65,
+    "dropcount": 7
   },
   {
-    "id": "tr_94",
-    "name": "Light_Green-Red_Tint",
-    "r": 3,
+    "id": "72",
+    "name": "Pacific Blue",
+    "gen_name": "r0g4b3",
+    "r": 0,
     "g": 4,
     "b": 3,
-    "mode": "hard"
+    "mode": "expert",
+    "difficulty": 66,
+    "dropcount": 7
   },
   {
-    "id": "tr_99",
-    "name": "Soft_Green_with_Blue",
-    "r": 2,
-    "g": 5,
-    "b": 3,
-    "mode": "hard"
-  },
-  {
-    "id": "tr_105",
-    "name": "Pale_Green_Tone",
-    "r": 1,
-    "g": 5,
-    "b": 4,
-    "mode": "hard"
-  },
-  {
-    "id": "tr_106",
-    "name": "Pale_Blue_Tone",
-    "r": 1,
-    "g": 4,
-    "b": 5,
-    "mode": "hard"
-  },
-  {
-    "id": "tr_100",
-    "name": "Soft_Blue_with_Green",
-    "r": 2,
+    "id": "73",
+    "name": "Cerulean",
+    "gen_name": "r0g3b4",
+    "r": 0,
     "g": 3,
-    "b": 5,
-    "mode": "hard"
+    "b": 4,
+    "mode": "expert",
+    "difficulty": 67,
+    "dropcount": 7
   },
   {
-    "id": "tr_101",
-    "name": "Pale_Blue_Tone",
-    "r": 2,
-    "g": 1,
-    "b": 7,
-    "mode": "hard"
-  },
-  {
-    "id": "tr_96",
-    "name": "Soft_Blue_with_Red",
-    "r": 3,
+    "id": "74",
+    "name": "Royal Blue",
+    "gen_name": "r0g2b5",
+    "r": 0,
     "g": 2,
     "b": 5,
-    "mode": "hard"
+    "mode": "expert",
+    "difficulty": 68,
+    "dropcount": 7
   },
   {
-    "id": "tr_97",
-    "name": "Pale_Blue_Tone",
-    "r": 3,
+    "id": "75",
+    "name": "Ultramarine",
+    "gen_name": "r0g1b6",
+    "r": 0,
     "g": 1,
     "b": 6,
-    "mode": "hard"
+    "mode": "expert",
+    "difficulty": 69,
+    "dropcount": 7
   },
   {
-    "id": "tr_91",
-    "name": "Pale_Blue_Tone",
+    "id": "76",
+    "name": "Watermelon",
+    "gen_name": "r6g0b1",
+    "r": 6,
+    "g": 0,
+    "b": 1,
+    "mode": "expert",
+    "difficulty": 70,
+    "dropcount": 7
+  },
+  {
+    "id": "77",
+    "name": "Raspberry",
+    "gen_name": "r5g0b2",
+    "r": 5,
+    "g": 0,
+    "b": 2,
+    "mode": "expert",
+    "difficulty": 71,
+    "dropcount": 7
+  },
+  {
+    "id": "78",
+    "name": "Plum",
+    "gen_name": "r4g0b3",
     "r": 4,
+    "g": 0,
+    "b": 3,
+    "mode": "expert",
+    "difficulty": 72,
+    "dropcount": 7
+  },
+  {
+    "id": "79",
+    "name": "Amethyst",
+    "gen_name": "r3g0b4",
+    "r": 3,
+    "g": 0,
+    "b": 4,
+    "mode": "expert",
+    "difficulty": 73,
+    "dropcount": 7
+  },
+  {
+    "id": "80",
+    "name": "Deep Violet",
+    "gen_name": "r2g0b5",
+    "r": 2,
+    "g": 0,
+    "b": 5,
+    "mode": "expert",
+    "difficulty": 74,
+    "dropcount": 7
+  },
+  {
+    "id": "81",
+    "name": "Midnight Purple",
+    "gen_name": "r1g0b6",
+    "r": 1,
+    "g": 0,
+    "b": 6,
+    "mode": "expert",
+    "difficulty": 75,
+    "dropcount": 7
+  },
+  {
+    "id": "82",
+    "name": "Brick",
+    "gen_name": "r5g1b1",
+    "r": 5,
+    "g": 1,
+    "b": 1,
+    "mode": "expert",
+    "difficulty": 76,
+    "dropcount": 7
+  },
+  {
+    "id": "83",
+    "name": "Pine",
+    "gen_name": "r1g5b1",
+    "r": 1,
+    "g": 5,
+    "b": 1,
+    "mode": "expert",
+    "difficulty": 77,
+    "dropcount": 7
+  },
+  {
+    "id": "84",
+    "name": "Denim",
+    "gen_name": "r1g1b5",
+    "r": 1,
     "g": 1,
     "b": 5,
-    "mode": "hard"
+    "mode": "expert",
+    "difficulty": 78,
+    "dropcount": 7
   },
   {
-    "id": "tr_123",
-    "name": "Soft_Red_with_Blue",
-    "r": 5,
-    "g": 2,
-    "b": 4,
-    "mode": "hard"
-  },
-  {
-    "id": "tr_128",
-    "name": "Light_Red-Blue_Tint",
-    "r": 4,
-    "g": 3,
-    "b": 4,
-    "mode": "hard"
-  },
-  {
-    "id": "tr_118",
-    "name": "Soft_Red_with_Blue",
-    "r": 6,
-    "g": 2,
-    "b": 3,
-    "mode": "hard"
-  },
-  {
-    "id": "tr_114",
-    "name": "Pale_Red_Tone",
+    "id": "85",
+    "name": "Mahogany",
+    "gen_name": "r7g1b0",
     "r": 7,
+    "g": 1,
+    "b": 0,
+    "mode": "expert",
+    "difficulty": 79,
+    "dropcount": 8
+  },
+  {
+    "id": "86",
+    "name": "Copper",
+    "gen_name": "r6g2b0",
+    "r": 6,
     "g": 2,
-    "b": 2,
-    "mode": "hard"
+    "b": 0,
+    "mode": "expert",
+    "difficulty": 80,
+    "dropcount": 8
   },
   {
-    "id": "tr_122",
-    "name": "Soft_Red_with_Green",
+    "id": "87",
+    "name": "Brass",
+    "gen_name": "r5g3b0",
     "r": 5,
     "g": 3,
-    "b": 3,
-    "mode": "hard"
+    "b": 0,
+    "mode": "expert",
+    "difficulty": 81,
+    "dropcount": 8
   },
   {
-    "id": "tr_117",
-    "name": "Soft_Red_with_Green",
-    "r": 6,
-    "g": 3,
-    "b": 2,
-    "mode": "hard"
-  },
-  {
-    "id": "tr_127",
-    "name": "Light_Red-Green_Tint",
+    "id": "88",
+    "name": "Olive",
+    "gen_name": "r4g4b0",
     "r": 4,
     "g": 4,
-    "b": 3,
-    "mode": "hard"
+    "b": 0,
+    "mode": "expert",
+    "difficulty": 82,
+    "dropcount": 8
   },
   {
-    "id": "tr_121",
-    "name": "Soft_Red_with_Green",
-    "r": 5,
-    "g": 4,
-    "b": 2,
-    "mode": "hard"
-  },
-  {
-    "id": "tr_116",
-    "name": "Pale_Red_Tone",
-    "r": 6,
-    "g": 4,
-    "b": 1,
-    "mode": "hard"
-  },
-  {
-    "id": "tr_125",
-    "name": "Pale_Green_Tone",
-    "r": 4,
-    "g": 6,
-    "b": 1,
-    "mode": "hard"
-  },
-  {
-    "id": "tr_126",
-    "name": "Soft_Green_with_Red",
-    "r": 4,
-    "g": 5,
-    "b": 2,
-    "mode": "hard"
-  },
-  {
-    "id": "tr_133",
-    "name": "Soft_Green_with_Red",
+    "id": "89",
+    "name": "Avocado",
+    "gen_name": "r3g5b0",
     "r": 3,
     "g": 5,
-    "b": 3,
-    "mode": "hard"
+    "b": 0,
+    "mode": "expert",
+    "difficulty": 83,
+    "dropcount": 8
   },
   {
-    "id": "tr_140",
-    "name": "Soft_Green_with_Blue",
+    "id": "90",
+    "name": "Grass Green",
+    "gen_name": "r2g6b0",
     "r": 2,
     "g": 6,
-    "b": 3,
-    "mode": "hard"
+    "b": 0,
+    "mode": "expert",
+    "difficulty": 84,
+    "dropcount": 8
   },
   {
-    "id": "tr_134",
-    "name": "Light_Green-Blue_Tint",
-    "r": 3,
-    "g": 4,
-    "b": 4,
-    "mode": "hard"
-  },
-  {
-    "id": "tr_141",
-    "name": "Soft_Green_with_Blue",
-    "r": 2,
-    "g": 5,
-    "b": 4,
-    "mode": "hard"
-  },
-  {
-    "id": "tr_150",
-    "name": "Pale_Green_Tone",
-    "r": 1,
-    "g": 5,
-    "b": 5,
-    "mode": "hard"
-  },
-  {
-    "id": "tr_151",
-    "name": "Pale_Blue_Tone",
-    "r": 1,
-    "g": 4,
-    "b": 6,
-    "mode": "hard"
-  },
-  {
-    "id": "tr_142",
-    "name": "Soft_Blue_with_Green",
-    "r": 2,
-    "g": 4,
-    "b": 5,
-    "mode": "hard"
-  },
-  {
-    "id": "tr_143",
-    "name": "Soft_Blue_with_Green",
-    "r": 2,
-    "g": 3,
-    "b": 6,
-    "mode": "hard"
-  },
-  {
-    "id": "tr_135",
-    "name": "Soft_Blue_with_Red",
-    "r": 3,
-    "g": 3,
-    "b": 5,
-    "mode": "hard"
-  },
-  {
-    "id": "tr_136",
-    "name": "Soft_Blue_with_Red",
-    "r": 3,
-    "g": 2,
-    "b": 6,
-    "mode": "hard"
-  },
-  {
-    "id": "tr_137",
-    "name": "Pale_Blue_Tone",
-    "r": 3,
-    "g": 1,
-    "b": 7,
-    "mode": "hard"
-  },
-  {
-    "id": "tr_129",
-    "name": "Soft_Blue_with_Red",
-    "r": 4,
-    "g": 2,
-    "b": 5,
-    "mode": "hard"
-  },
-  {
-    "id": "tr_130",
-    "name": "Pale_Blue_Tone",
-    "r": 4,
-    "g": 1,
-    "b": 6,
-    "mode": "hard"
-  },
-  {
-    "id": "tr_163",
-    "name": "Pale_Red_Tone",
-    "r": 7,
-    "g": 1,
-    "b": 4,
-    "mode": "hard"
-  },
-  {
-    "id": "tr_169",
-    "name": "Soft_Red_with_Blue",
-    "r": 5,
-    "g": 3,
-    "b": 4,
-    "mode": "hard"
-  },
-  {
-    "id": "tr_161",
-    "name": "Pale_Red_Tone",
-    "r": 7,
-    "g": 3,
-    "b": 2,
-    "mode": "hard"
-  },
-  {
-    "id": "tr_168",
-    "name": "Soft_Red_with_Green",
-    "r": 5,
-    "g": 4,
-    "b": 3,
-    "mode": "hard"
-  },
-  {
-    "id": "tr_164",
-    "name": "Pale_Red_Tone",
-    "r": 6,
-    "g": 5,
-    "b": 1,
-    "mode": "hard"
-  },
-  {
-    "id": "tr_166",
-    "name": "Pale_Green_Tone",
-    "r": 5,
-    "g": 6,
-    "b": 1,
-    "mode": "hard"
-  },
-  {
-    "id": "tr_173",
-    "name": "Soft_Green_with_Red",
-    "r": 4,
-    "g": 5,
-    "b": 3,
-    "mode": "hard"
-  },
-  {
-    "id": "tr_178",
-    "name": "Soft_Green_with_Blue",
-    "r": 3,
-    "g": 5,
-    "b": 4,
-    "mode": "hard"
-  },
-  {
-    "id": "tr_190",
-    "name": "Pale_Green_Tone",
+    "id": "91",
+    "name": "Kelly Green",
+    "gen_name": "r1g7b0",
     "r": 1,
     "g": 7,
-    "b": 4,
-    "mode": "hard"
+    "b": 0,
+    "mode": "master",
+    "difficulty": 85,
+    "dropcount": 8
   },
   {
-    "id": "tr_184",
-    "name": "Soft_Green_with_Blue",
-    "r": 2,
-    "g": 5,
-    "b": 5,
-    "mode": "hard"
+    "id": "92",
+    "name": "Shamrock",
+    "gen_name": "r0g7b1",
+    "r": 0,
+    "g": 7,
+    "b": 1,
+    "mode": "master",
+    "difficulty": 86,
+    "dropcount": 8
   },
   {
-    "id": "tr_191",
-    "name": "Pale_Green_Tone",
-    "r": 1,
+    "id": "93",
+    "name": "Viridian",
+    "gen_name": "r0g6b2",
+    "r": 0,
     "g": 6,
-    "b": 5,
-    "mode": "hard"
+    "b": 2,
+    "mode": "master",
+    "difficulty": 87,
+    "dropcount": 8
   },
   {
-    "id": "tr_192",
-    "name": "Pale_Blue_Tone",
-    "r": 1,
+    "id": "94",
+    "name": "Teal Green",
+    "gen_name": "r0g5b3",
+    "r": 0,
     "g": 5,
-    "b": 6,
-    "mode": "hard"
+    "b": 3,
+    "mode": "master",
+    "difficulty": 88,
+    "dropcount": 8
   },
   {
-    "id": "tr_194",
-    "name": "Pale_Blue_Tone",
-    "r": 1,
-    "g": 3,
-    "b": 8,
-    "mode": "hard"
-  },
-  {
-    "id": "tr_179",
-    "name": "Soft_Blue_with_Green",
-    "r": 3,
+    "id": "95",
+    "name": "Cyan Blue",
+    "gen_name": "r0g4b4",
+    "r": 0,
     "g": 4,
-    "b": 5,
-    "mode": "hard"
+    "b": 4,
+    "mode": "master",
+    "difficulty": 89,
+    "dropcount": 8
   },
   {
-    "id": "tr_185",
-    "name": "Pale_Blue_Tone",
-    "r": 2,
+    "id": "96",
+    "name": "Sky Blue",
+    "gen_name": "r0g3b5",
+    "r": 0,
     "g": 3,
-    "b": 7,
-    "mode": "hard"
+    "b": 5,
+    "mode": "master",
+    "difficulty": 90,
+    "dropcount": 8
   },
   {
-    "id": "tr_180",
-    "name": "Pale_Blue_Tone",
-    "r": 3,
+    "id": "97",
+    "name": "Lapis",
+    "gen_name": "r0g2b6",
+    "r": 0,
     "g": 2,
-    "b": 7,
-    "mode": "hard"
+    "b": 6,
+    "mode": "master",
+    "difficulty": 91,
+    "dropcount": 8
   },
   {
-    "id": "tr_174",
-    "name": "Soft_Blue_with_Red",
-    "r": 4,
-    "g": 3,
-    "b": 5,
-    "mode": "hard"
-  },
-  {
-    "id": "tr_181",
-    "name": "Pale_Blue_Tone",
-    "r": 3,
+    "id": "98",
+    "name": "Prussian Blue",
+    "gen_name": "r0g1b7",
+    "r": 0,
     "g": 1,
-    "b": 8,
-    "mode": "hard"
+    "b": 7,
+    "mode": "master",
+    "difficulty": 92,
+    "dropcount": 8
   },
   {
-    "id": "tr_216",
-    "name": "Soft_Red_with_Blue",
+    "id": "99",
+    "name": "Scarlet",
+    "gen_name": "r7g0b1",
+    "r": 7,
+    "g": 0,
+    "b": 1,
+    "mode": "master",
+    "difficulty": 93,
+    "dropcount": 8
+  },
+  {
+    "id": "100",
+    "name": "Ruby",
+    "gen_name": "r6g0b2",
     "r": 6,
-    "g": 2,
-    "b": 5,
-    "mode": "master"
+    "g": 0,
+    "b": 2,
+    "mode": "master",
+    "difficulty": 94,
+    "dropcount": 8
   },
   {
-    "id": "tr_222",
-    "name": "Soft_Red_with_Blue",
+    "id": "101",
+    "name": "Orchid",
+    "gen_name": "r5g0b3",
     "r": 5,
-    "g": 3,
-    "b": 5,
-    "mode": "master"
+    "g": 0,
+    "b": 3,
+    "mode": "master",
+    "difficulty": 95,
+    "dropcount": 8
   },
   {
-    "id": "tr_206",
-    "name": "Pale_Red_Tone",
+    "id": "102",
+    "name": "Purple Heart",
+    "gen_name": "r4g0b4",
+    "r": 4,
+    "g": 0,
+    "b": 4,
+    "mode": "master",
+    "difficulty": 96,
+    "dropcount": 8
+  },
+  {
+    "id": "103",
+    "name": "Iris",
+    "gen_name": "r3g0b5",
+    "r": 3,
+    "g": 0,
+    "b": 5,
+    "mode": "master",
+    "difficulty": 97,
+    "dropcount": 8
+  },
+  {
+    "id": "104",
+    "name": "Dark Violet",
+    "gen_name": "r2g0b6",
+    "r": 2,
+    "g": 0,
+    "b": 6,
+    "mode": "master",
+    "difficulty": 98,
+    "dropcount": 8
+  },
+  {
+    "id": "105",
+    "name": "Redwood",
+    "gen_name": "r8g1b0",
     "r": 8,
     "g": 1,
-    "b": 4,
-    "mode": "master"
+    "b": 0,
+    "mode": "master",
+    "difficulty": 99,
+    "dropcount": 9
   },
   {
-    "id": "tr_210",
-    "name": "Pale_Red_Tone",
+    "id": "106",
+    "name": "Cinnamon",
+    "gen_name": "r7g2b0",
     "r": 7,
     "g": 2,
-    "b": 4,
-    "mode": "master"
+    "b": 0,
+    "mode": "master",
+    "difficulty": 100,
+    "dropcount": 9
   },
   {
-    "id": "tr_215",
-    "name": "Soft_Red_with_Blue",
+    "id": "107",
+    "name": "Hazel",
+    "gen_name": "r6g3b0",
     "r": 6,
     "g": 3,
-    "b": 4,
-    "mode": "master"
+    "b": 0,
+    "mode": "master",
+    "difficulty": 101,
+    "dropcount": 9
   },
   {
-    "id": "tr_221",
-    "name": "Light_Red-Green_Tint",
+    "id": "108",
+    "name": "Moss",
+    "gen_name": "r5g4b0",
     "r": 5,
     "g": 4,
-    "b": 4,
-    "mode": "master"
+    "b": 0,
+    "mode": "master",
+    "difficulty": 102,
+    "dropcount": 9
   },
   {
-    "id": "tr_214",
-    "name": "Soft_Red_with_Green",
-    "r": 6,
-    "g": 4,
-    "b": 3,
-    "mode": "master"
-  },
-  {
-    "id": "tr_208",
-    "name": "Pale_Red_Tone",
-    "r": 7,
-    "g": 4,
-    "b": 2,
-    "mode": "master"
-  },
-  {
-    "id": "tr_220",
-    "name": "Soft_Red_with_Green",
-    "r": 5,
-    "g": 5,
-    "b": 3,
-    "mode": "master"
-  },
-  {
-    "id": "tr_213",
-    "name": "Soft_Red_with_Green",
-    "r": 6,
-    "g": 5,
-    "b": 2,
-    "mode": "master"
-  },
-  {
-    "id": "tr_218",
-    "name": "Pale_Green_Tone",
-    "r": 5,
-    "g": 7,
-    "b": 1,
-    "mode": "master"
-  },
-  {
-    "id": "tr_219",
-    "name": "Soft_Green_with_Red",
-    "r": 5,
-    "g": 6,
-    "b": 2,
-    "mode": "master"
-  },
-  {
-    "id": "tr_226",
-    "name": "Pale_Green_Tone",
-    "r": 4,
-    "g": 7,
-    "b": 2,
-    "mode": "master"
-  },
-  {
-    "id": "tr_227",
-    "name": "Soft_Green_with_Red",
-    "r": 4,
-    "g": 6,
-    "b": 3,
-    "mode": "master"
-  },
-  {
-    "id": "tr_228",
-    "name": "Light_Green-Red_Tint",
+    "id": "109",
+    "name": "Pea Green",
+    "gen_name": "r4g5b0",
     "r": 4,
     "g": 5,
-    "b": 4,
-    "mode": "master"
+    "b": 0,
+    "mode": "master",
+    "difficulty": 103,
+    "dropcount": 9
   },
   {
-    "id": "tr_236",
-    "name": "Soft_Green_with_Blue",
+    "id": "110",
+    "name": "Fern",
+    "gen_name": "r3g6b0",
     "r": 3,
     "g": 6,
-    "b": 4,
-    "mode": "master"
+    "b": 0,
+    "mode": "master",
+    "difficulty": 104,
+    "dropcount": 9
   },
   {
-    "id": "tr_237",
-    "name": "Soft_Green_with_Blue",
-    "r": 3,
-    "g": 5,
-    "b": 5,
-    "mode": "master"
-  },
-  {
-    "id": "tr_246",
-    "name": "Soft_Green_with_Blue",
+    "id": "111",
+    "name": "Shamrock Green",
+    "gen_name": "r2g7b0",
     "r": 2,
-    "g": 6,
-    "b": 5,
-    "mode": "master"
+    "g": 7,
+    "b": 0,
+    "mode": "legend",
+    "difficulty": 105,
+    "dropcount": 9
   },
   {
-    "id": "tr_256",
-    "name": "Pale_Green_Tone",
+    "id": "112",
+    "name": "Pine Green",
+    "gen_name": "r1g8b0",
     "r": 1,
-    "g": 7,
-    "b": 5,
-    "mode": "master"
+    "g": 8,
+    "b": 0,
+    "mode": "legend",
+    "difficulty": 106,
+    "dropcount": 9
   },
   {
-    "id": "tr_257",
-    "name": "Pale_Green_Tone",
-    "r": 1,
-    "g": 6,
-    "b": 6,
-    "mode": "master"
-  },
-  {
-    "id": "tr_258",
-    "name": "Pale_Blue_Tone",
-    "r": 1,
-    "g": 5,
-    "b": 7,
-    "mode": "master"
-  },
-  {
-    "id": "tr_247",
-    "name": "Soft_Blue_with_Green",
-    "r": 2,
-    "g": 5,
-    "b": 6,
-    "mode": "master"
-  },
-  {
-    "id": "tr_248",
-    "name": "Pale_Blue_Tone",
-    "r": 2,
-    "g": 4,
-    "b": 7,
-    "mode": "master"
-  },
-  {
-    "id": "tr_238",
-    "name": "Soft_Blue_with_Green",
-    "r": 3,
-    "g": 4,
-    "b": 6,
-    "mode": "master"
-  },
-  {
-    "id": "tr_239",
-    "name": "Soft_Blue_with_Red",
-    "r": 3,
-    "g": 3,
-    "b": 7,
-    "mode": "master"
-  },
-  {
-    "id": "tr_250",
-    "name": "Pale_Blue_Tone",
-    "r": 2,
-    "g": 2,
-    "b": 9,
-    "mode": "master"
-  },
-  {
-    "id": "tr_230",
-    "name": "Soft_Blue_with_Red",
-    "r": 4,
-    "g": 3,
-    "b": 6,
-    "mode": "master"
-  },
-  {
-    "id": "tr_241",
-    "name": "Pale_Blue_Tone",
-    "r": 3,
-    "g": 1,
-    "b": 9,
-    "mode": "master"
-  },
-  {
-    "id": "tr_231",
-    "name": "Pale_Blue_Tone",
-    "r": 4,
-    "g": 2,
-    "b": 7,
-    "mode": "master"
-  },
-  {
-    "id": "tr_232",
-    "name": "Pale_Blue_Tone",
-    "r": 4,
-    "g": 1,
-    "b": 8,
-    "mode": "master"
-  },
-  {
-    "id": "tr_223",
-    "name": "Soft_Blue_with_Red",
-    "r": 5,
-    "g": 2,
-    "b": 6,
-    "mode": "master"
-  },
-  {
-    "id": "tr_274",
-    "name": "Pale_Red_Tone",
-    "r": 8,
-    "g": 1,
-    "b": 5,
-    "mode": "master"
-  },
-  {
-    "id": "tr_279",
-    "name": "Pale_Red_Tone",
-    "r": 7,
-    "g": 2,
-    "b": 5,
-    "mode": "master"
-  },
-  {
-    "id": "tr_283",
-    "name": "Soft_Red_with_Blue",
-    "r": 6,
-    "g": 3,
-    "b": 5,
-    "mode": "master"
-  },
-  {
-    "id": "tr_289",
-    "name": "Light_Red-Blue_Tint",
-    "r": 5,
-    "g": 4,
-    "b": 5,
-    "mode": "master"
-  },
-  {
-    "id": "tr_278",
-    "name": "Soft_Red_with_Blue",
-    "r": 7,
-    "g": 3,
-    "b": 4,
-    "mode": "master"
-  },
-  {
-    "id": "tr_277",
-    "name": "Soft_Red_with_Green",
-    "r": 7,
-    "g": 4,
-    "b": 3,
-    "mode": "master"
-  },
-  {
-    "id": "tr_288",
-    "name": "Light_Red-Green_Tint",
-    "r": 5,
-    "g": 5,
-    "b": 4,
-    "mode": "master"
-  },
-  {
-    "id": "tr_282",
-    "name": "Soft_Red_with_Green",
-    "r": 6,
-    "g": 5,
-    "b": 3,
-    "mode": "master"
-  },
-  {
-    "id": "tr_276",
-    "name": "Pale_Red_Tone",
-    "r": 7,
-    "g": 5,
-    "b": 2,
-    "mode": "master"
-  },
-  {
-    "id": "tr_272",
-    "name": "Pale_Red_Tone",
-    "r": 8,
-    "g": 5,
-    "b": 1,
-    "mode": "master"
-  },
-  {
-    "id": "tr_275",
-    "name": "Pale_Red_Tone",
-    "r": 7,
-    "g": 6,
-    "b": 1,
-    "mode": "master"
-  },
-  {
-    "id": "tr_281",
-    "name": "Pale_Green_Tone",
-    "r": 6,
-    "g": 7,
-    "b": 1,
-    "mode": "master"
-  },
-  {
-    "id": "tr_285",
-    "name": "Pale_Green_Tone",
-    "r": 5,
+    "id": "113",
+    "name": "Malachite",
+    "gen_name": "r0g8b1",
+    "r": 0,
     "g": 8,
     "b": 1,
-    "mode": "master"
+    "mode": "legend",
+    "difficulty": 107,
+    "dropcount": 9
   },
   {
-    "id": "tr_287",
-    "name": "Soft_Green_with_Red",
-    "r": 5,
+    "id": "114",
+    "name": "Sea Green",
+    "gen_name": "r0g7b2",
+    "r": 0,
+    "g": 7,
+    "b": 2,
+    "mode": "legend",
+    "difficulty": 108,
+    "dropcount": 9
+  },
+  {
+    "id": "115",
+    "name": "Aegean",
+    "gen_name": "r0g6b3",
+    "r": 0,
     "g": 6,
     "b": 3,
-    "mode": "master"
+    "mode": "legend",
+    "difficulty": 109,
+    "dropcount": 9
   },
   {
-    "id": "tr_301",
-    "name": "Soft_Green_with_Blue",
-    "r": 3,
-    "g": 7,
+    "id": "116",
+    "name": "Peacock",
+    "gen_name": "r0g5b4",
+    "r": 0,
+    "g": 5,
     "b": 4,
-    "mode": "master"
+    "mode": "legend",
+    "difficulty": 110,
+    "dropcount": 9
   },
   {
-    "id": "tr_295",
-    "name": "Light_Green-Blue_Tint",
-    "r": 4,
-    "g": 5,
-    "b": 5,
-    "mode": "master"
-  },
-  {
-    "id": "tr_302",
-    "name": "Soft_Green_with_Blue",
-    "r": 3,
-    "g": 6,
-    "b": 5,
-    "mode": "master"
-  },
-  {
-    "id": "tr_319",
-    "name": "Pale_Green_Tone",
-    "r": 1,
-    "g": 7,
-    "b": 6,
-    "mode": "master"
-  },
-  {
-    "id": "tr_320",
-    "name": "Pale_Blue_Tone",
-    "r": 1,
-    "g": 6,
-    "b": 7,
-    "mode": "master"
-  },
-  {
-    "id": "tr_303",
-    "name": "Soft_Blue_with_Green",
-    "r": 3,
-    "g": 5,
-    "b": 6,
-    "mode": "master"
-  },
-  {
-    "id": "tr_304",
-    "name": "Soft_Blue_with_Green",
-    "r": 3,
+    "id": "117",
+    "name": "Ocean Denim",
+    "gen_name": "r0g4b5",
+    "r": 0,
     "g": 4,
-    "b": 7,
-    "mode": "master"
+    "b": 5,
+    "mode": "legend",
+    "difficulty": 111,
+    "dropcount": 9
   },
   {
-    "id": "tr_305",
-    "name": "Soft_Blue_with_Red",
-    "r": 3,
-    "g": 3,
-    "b": 8,
-    "mode": "master"
-  },
-  {
-    "id": "tr_296",
-    "name": "Soft_Blue_with_Red",
-    "r": 4,
-    "g": 3,
-    "b": 7,
-    "mode": "master"
-  },
-  {
-    "id": "tr_290",
-    "name": "Soft_Blue_with_Red",
-    "r": 5,
+    "id": "118",
+    "name": "Sapphire Blue",
+    "gen_name": "r0g3b6",
+    "r": 0,
     "g": 3,
     "b": 6,
-    "mode": "master"
+    "mode": "legend",
+    "difficulty": 112,
+    "dropcount": 9
   },
   {
-    "id": "tr_297",
-    "name": "Pale_Blue_Tone",
-    "r": 4,
-    "g": 1,
-    "b": 9,
-    "mode": "master"
-  },
-  {
-    "id": "tr_352",
-    "name": "Pale_Red_Tone",
-    "r": 7,
-    "g": 1,
+    "id": "119",
+    "name": "Indigo Blue",
+    "gen_name": "r0g2b7",
+    "r": 0,
+    "g": 2,
     "b": 7,
-    "mode": "master"
+    "mode": "legend",
+    "difficulty": 113,
+    "dropcount": 9
   },
   {
-    "id": "tr_344",
-    "name": "Pale_Red_Tone",
+    "id": "120",
+    "name": "Crimson Red",
+    "gen_name": "r8g0b1",
+    "r": 8,
+    "g": 0,
+    "b": 1,
+    "mode": "legend",
+    "difficulty": 114,
+    "dropcount": 9
+  },
+  {
+    "id": "121",
+    "name": "Burgundy",
+    "gen_name": "r7g0b2",
+    "r": 7,
+    "g": 0,
+    "b": 2,
+    "mode": "legend",
+    "difficulty": 115,
+    "dropcount": 9
+  },
+  {
+    "id": "122",
+    "name": "Wine",
+    "gen_name": "r6g0b3",
+    "r": 6,
+    "g": 0,
+    "b": 3,
+    "mode": "legend",
+    "difficulty": 116,
+    "dropcount": 9
+  },
+  {
+    "id": "123",
+    "name": "Mauve",
+    "gen_name": "r5g0b4",
+    "r": 5,
+    "g": 0,
+    "b": 4,
+    "mode": "legend",
+    "difficulty": 117,
+    "dropcount": 9
+  },
+  {
+    "id": "124",
+    "name": "Lilac",
+    "gen_name": "r4g0b5",
+    "r": 4,
+    "g": 0,
+    "b": 5,
+    "mode": "legend",
+    "difficulty": 118,
+    "dropcount": 9
+  },
+  {
+    "id": "125",
+    "name": "Saddle Brown",
+    "gen_name": "r8g2b0",
     "r": 8,
     "g": 2,
-    "b": 5,
-    "mode": "master"
+    "b": 0,
+    "mode": "legend",
+    "difficulty": 119,
+    "dropcount": 10
   },
   {
-    "id": "tr_335",
-    "name": "Pale_Red_Tone",
+    "id": "126",
+    "name": "Caramel",
+    "gen_name": "r7g3b0",
+    "r": 7,
+    "g": 3,
+    "b": 0,
+    "mode": "legend",
+    "difficulty": 120,
+    "dropcount": 10
+  },
+  {
+    "id": "127",
+    "name": "Khaki",
+    "gen_name": "r6g4b0",
+    "r": 6,
+    "g": 4,
+    "b": 0,
+    "mode": "legend",
+    "difficulty": 121,
+    "dropcount": 10
+  },
+  {
+    "id": "128",
+    "name": "Chartreuse",
+    "gen_name": "r5g5b0",
+    "r": 5,
+    "g": 5,
+    "b": 0,
+    "mode": "legend",
+    "difficulty": 122,
+    "dropcount": 10
+  },
+  {
+    "id": "129",
+    "name": "Yellow Green",
+    "gen_name": "r4g6b0",
+    "r": 4,
+    "g": 6,
+    "b": 0,
+    "mode": "legend",
+    "difficulty": 123,
+    "dropcount": 10
+  },
+  {
+    "id": "130",
+    "name": "Lime Green",
+    "gen_name": "r3g7b0",
+    "r": 3,
+    "g": 7,
+    "b": 0,
+    "mode": "legend",
+    "difficulty": 124,
+    "dropcount": 10
+  },
+  {
+    "id": "131",
+    "name": "Spring Bud",
+    "gen_name": "r2g8b0",
+    "r": 2,
+    "g": 8,
+    "b": 0,
+    "mode": "ultimate",
+    "difficulty": 125,
+    "dropcount": 10
+  },
+  {
+    "id": "132",
+    "name": "Green Apple",
+    "gen_name": "r1g9b0",
+    "r": 1,
+    "g": 9,
+    "b": 0,
+    "mode": "ultimate",
+    "difficulty": 126,
+    "dropcount": 10
+  },
+  {
+    "id": "133",
+    "name": "Emerald Green",
+    "gen_name": "r0g9b1",
+    "r": 0,
+    "g": 9,
+    "b": 1,
+    "mode": "ultimate",
+    "difficulty": 127,
+    "dropcount": 10
+  },
+  {
+    "id": "134",
+    "name": "Jungle",
+    "gen_name": "r0g8b2",
+    "r": 0,
+    "g": 8,
+    "b": 2,
+    "mode": "ultimate",
+    "difficulty": 128,
+    "dropcount": 10
+  },
+  {
+    "id": "135",
+    "name": "Bottle Green",
+    "gen_name": "r0g7b3",
+    "r": 0,
+    "g": 7,
+    "b": 3,
+    "mode": "ultimate",
+    "difficulty": 129,
+    "dropcount": 10
+  },
+  {
+    "id": "136",
+    "name": "Teal Steel",
+    "gen_name": "r0g6b4",
+    "r": 0,
+    "g": 6,
+    "b": 4,
+    "mode": "ultimate",
+    "difficulty": 130,
+    "dropcount": 10
+  },
+  {
+    "id": "137",
+    "name": "Slate Blue",
+    "gen_name": "r0g5b5",
+    "r": 0,
+    "g": 5,
+    "b": 5,
+    "mode": "ultimate",
+    "difficulty": 131,
+    "dropcount": 10
+  },
+  {
+    "id": "138",
+    "name": "Vermillion",
+    "gen_name": "r9g0b1",
+    "r": 9,
+    "g": 0,
+    "b": 1,
+    "mode": "ultimate",
+    "difficulty": 132,
+    "dropcount": 10
+  },
+  {
+    "id": "139",
+    "name": "Garnet",
+    "gen_name": "r8g0b2",
+    "r": 8,
+    "g": 0,
+    "b": 2,
+    "mode": "ultimate",
+    "difficulty": 133,
+    "dropcount": 10
+  },
+  {
+    "id": "140",
+    "name": "Maroon",
+    "gen_name": "r7g0b3",
+    "r": 7,
+    "g": 0,
+    "b": 3,
+    "mode": "ultimate",
+    "difficulty": 134,
+    "dropcount": 10
+  },
+  {
+    "id": "141",
+    "name": "Heliotrope",
+    "gen_name": "r6g0b4",
+    "r": 6,
+    "g": 0,
+    "b": 4,
+    "mode": "ultimate",
+    "difficulty": 135,
+    "dropcount": 10
+  },
+  {
+    "id": "142",
+    "name": "Chestnut",
+    "gen_name": "r10g1b0",
     "r": 10,
     "g": 1,
-    "b": 4,
-    "mode": "master"
+    "b": 0,
+    "mode": "ultimate",
+    "difficulty": 136,
+    "dropcount": 11
   },
   {
-    "id": "tr_350",
-    "name": "Soft_Red_with_Blue",
-    "r": 7,
-    "g": 3,
-    "b": 5,
-    "mode": "master"
-  },
-  {
-    "id": "tr_338",
-    "name": "Pale_Red_Tone",
+    "id": "143",
+    "name": "Sienna",
+    "gen_name": "r9g2b0",
     "r": 9,
     "g": 2,
-    "b": 4,
-    "mode": "master"
+    "b": 0,
+    "mode": "ultimate",
+    "difficulty": 137,
+    "dropcount": 11
   },
   {
-    "id": "tr_349",
-    "name": "Soft_Red_with_Green",
+    "id": "144",
+    "name": "Tan Brown",
+    "gen_name": "r8g3b0",
+    "r": 8,
+    "g": 3,
+    "b": 0,
+    "mode": "ultimate",
+    "difficulty": 138,
+    "dropcount": 11
+  },
+  {
+    "id": "145",
+    "name": "Sand",
+    "gen_name": "r7g4b0",
     "r": 7,
     "g": 4,
-    "b": 4,
-    "mode": "master"
+    "b": 0,
+    "mode": "ultimate",
+    "difficulty": 139,
+    "dropcount": 11
   },
   {
-    "id": "tr_342",
-    "name": "Soft_Red_with_Green",
-    "r": 8,
-    "g": 4,
-    "b": 3,
-    "mode": "master"
-  },
-  {
-    "id": "tr_355",
-    "name": "Light_Red-Green_Tint",
+    "id": "146",
+    "name": "Olive Drab",
+    "gen_name": "r6g5b0",
     "r": 6,
     "g": 5,
-    "b": 4,
-    "mode": "master"
+    "b": 0,
+    "mode": "ultimate",
+    "difficulty": 140,
+    "dropcount": 11
   },
   {
-    "id": "tr_348",
-    "name": "Soft_Red_with_Green",
-    "r": 7,
-    "g": 5,
-    "b": 3,
-    "mode": "master"
-  },
-  {
-    "id": "tr_341",
-    "name": "Pale_Red_Tone",
-    "r": 8,
-    "g": 5,
-    "b": 2,
-    "mode": "master"
-  },
-  {
-    "id": "tr_336",
-    "name": "Pale_Red_Tone",
-    "r": 9,
-    "g": 5,
+    "id": "147",
+    "name": "Cherry",
+    "gen_name": "r10g0b1",
+    "r": 10,
+    "g": 0,
     "b": 1,
-    "mode": "master"
+    "mode": "ultimate",
+    "difficulty": 141,
+    "dropcount": 11
   },
   {
-    "id": "tr_354",
-    "name": "Pale_Green_Tone",
-    "r": 6,
-    "g": 7,
+    "id": "148",
+    "name": "Cardinal",
+    "gen_name": "r9g0b2",
+    "r": 9,
+    "g": 0,
     "b": 2,
-    "mode": "master"
+    "mode": "ultimate",
+    "difficulty": 142,
+    "dropcount": 11
   },
   {
-    "id": "tr_361",
-    "name": "Soft_Green_with_Red",
-    "r": 5,
-    "g": 7,
+    "id": "149",
+    "name": "Mulberry",
+    "gen_name": "r8g0b3",
+    "r": 8,
+    "g": 0,
     "b": 3,
-    "mode": "master"
+    "mode": "ultimate",
+    "difficulty": 143,
+    "dropcount": 11
   },
   {
-    "id": "tr_362",
-    "name": "Light_Green-Red_Tint",
-    "r": 5,
-    "g": 6,
-    "b": 4,
-    "mode": "master"
-  },
-  {
-    "id": "tr_370",
-    "name": "Soft_Green_with_Red",
-    "r": 4,
-    "g": 7,
-    "b": 4,
-    "mode": "master"
-  },
-  {
-    "id": "tr_379",
-    "name": "Soft_Green_with_Blue",
-    "r": 3,
-    "g": 8,
-    "b": 4,
-    "mode": "master"
-  },
-  {
-    "id": "tr_371",
-    "name": "Light_Green-Blue_Tint",
-    "r": 4,
-    "g": 6,
-    "b": 5,
-    "mode": "master"
-  },
-  {
-    "id": "tr_380",
-    "name": "Soft_Green_with_Blue",
-    "r": 3,
-    "g": 7,
-    "b": 5,
-    "mode": "master"
-  },
-  {
-    "id": "tr_390",
-    "name": "Pale_Green_Tone",
-    "r": 2,
-    "g": 7,
-    "b": 6,
-    "mode": "master"
-  },
-  {
-    "id": "tr_402",
-    "name": "Pale_Green_Tone",
-    "r": 1,
-    "g": 8,
-    "b": 6,
-    "mode": "master"
-  },
-  {
-    "id": "tr_403",
-    "name": "Pale_Green_Tone",
-    "r": 1,
-    "g": 7,
-    "b": 7,
-    "mode": "master"
-  },
-  {
-    "id": "tr_404",
-    "name": "Pale_Blue_Tone",
-    "r": 1,
-    "g": 6,
-    "b": 8,
-    "mode": "master"
-  },
-  {
-    "id": "tr_405",
-    "name": "Pale_Blue_Tone",
-    "r": 1,
-    "g": 5,
-    "b": 9,
-    "mode": "master"
-  },
-  {
-    "id": "tr_381",
-    "name": "Soft_Blue_with_Green",
-    "r": 3,
-    "g": 5,
-    "b": 7,
-    "mode": "master"
-  },
-  {
-    "id": "tr_393",
-    "name": "Pale_Blue_Tone",
-    "r": 2,
-    "g": 4,
-    "b": 9,
-    "mode": "master"
-  },
-  {
-    "id": "tr_372",
-    "name": "Light_Blue-Green_Tint",
-    "r": 4,
-    "g": 5,
-    "b": 6,
-    "mode": "master"
-  },
-  {
-    "id": "tr_382",
-    "name": "Soft_Blue_with_Green",
-    "r": 3,
-    "g": 4,
-    "b": 8,
-    "mode": "master"
-  },
-  {
-    "id": "tr_373",
-    "name": "Soft_Blue_with_Red",
-    "r": 4,
-    "g": 4,
-    "b": 7,
-    "mode": "master"
-  },
-  {
-    "id": "tr_374",
-    "name": "Soft_Blue_with_Red",
-    "r": 4,
-    "g": 3,
-    "b": 8,
-    "mode": "master"
-  },
-  {
-    "id": "tr_363",
-    "name": "Light_Blue-Red_Tint",
-    "r": 5,
-    "g": 4,
-    "b": 6,
-    "mode": "master"
-  },
-  {
-    "id": "tr_375",
-    "name": "Pale_Blue_Tone",
-    "r": 4,
-    "g": 2,
-    "b": 9,
-    "mode": "master"
-  },
-  {
-    "id": "tr_364",
-    "name": "Soft_Blue_with_Red",
-    "r": 5,
-    "g": 3,
-    "b": 7,
-    "mode": "master"
-  },
-  {
-    "id": "tr_365",
-    "name": "Pale_Blue_Tone",
-    "r": 5,
-    "g": 2,
-    "b": 8,
-    "mode": "master"
-  },
-  {
-    "id": "tr_366",
-    "name": "Pale_Blue_Tone",
-    "r": 5,
+    "id": "150",
+    "name": "Mahogany Red",
+    "gen_name": "r11g1b0",
+    "r": 11,
     "g": 1,
-    "b": 9,
-    "mode": "master"
+    "b": 0,
+    "mode": "ultimate",
+    "difficulty": 144,
+    "dropcount": 12
   },
   {
-    "id": "tr_357",
-    "name": "Pale_Blue_Tone",
-    "r": 6,
-    "g": 2,
-    "b": 7,
-    "mode": "master"
-  },
-  {
-    "id": "tr_358",
-    "name": "Pale_Blue_Tone",
-    "r": 6,
+    "id": "151",
+    "name": "Mahogany Red",
+    "gen_name": "r11g1b0",
+    "r": 11,
     "g": 1,
-    "b": 8,
-    "mode": "master"
+    "b": 0,
+    "mode": "ultimate",
+    "difficulty": 144,
+    "dropcount": 12
+  },
+  {
+    "id": "152",
+    "name": "Russet",
+    "gen_name": "r10g2b0",
+    "r": 10,
+    "g": 2,
+    "b": 0,
+    "mode": "ultimate",
+    "difficulty": 145,
+    "dropcount": 12
+  },
+  {
+    "id": "153",
+    "name": "Blood Red",
+    "gen_name": "r11g0b1",
+    "r": 11,
+    "g": 0,
+    "b": 1,
+    "mode": "ultimate",
+    "difficulty": 146,
+    "dropcount": 12
+  },
+  {
+    "id": "154",
+    "name": "Burnt Umber",
+    "gen_name": "r12g1b0",
+    "r": 12,
+    "g": 1,
+    "b": 0,
+    "mode": "ultimate",
+    "difficulty": 147,
+    "dropcount": 13
+  },
+  {
+    "id": "155",
+    "name": "Chocolate",
+    "gen_name": "r11g2b0",
+    "r": 11,
+    "g": 2,
+    "b": 0,
+    "mode": "ultimate",
+    "difficulty": 148,
+    "dropcount": 13
+  },
+  {
+    "id": "156",
+    "name": "Espresso",
+    "gen_name": "r13g1b0",
+    "r": 13,
+    "g": 1,
+    "b": 0,
+    "mode": "ultimate",
+    "difficulty": 149,
+    "dropcount": 14
+  },
+  {
+    "id": "157",
+    "name": "Coffee",
+    "gen_name": "r12g2b0",
+    "r": 12,
+    "g": 2,
+    "b": 0,
+    "mode": "ultimate",
+    "difficulty": 150,
+    "dropcount": 14
   }
 ];
