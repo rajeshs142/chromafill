@@ -1,0 +1,69 @@
+remove solve (add solve on too many undos) ✓
+proper color names (r1g2b3)  ✓
+revive sounds
+softer failure texts  ✓
+day streak (3 day perfect streak)
+calendar glow if all stars achieved
+daily challenge color on home. should go to challenge directly ✓
+highlight daily challenge on home ✓
+tutorial ✓
+particle effects
+less levels in each tier ✓
+hints? ✓
+undo?  ✓
+increase timer or slower animation  ✓
+Journey as path (garden) ✓
+add easing curves
+meditative act of color mixing
+feels like math texts - adding like  drops of water or liquid transitions
+look at text namings of pages and other labels ✓
+share should be better ✓
+wave animation of progress bar
+Collections ✓
+add copy right ✓
+two progress bars with toggle ✓
+home screen is journey  ✓
+Free Play as button  ✓
+url gatekeeping till tier has opened ✓
+
+
+🟢 Tier 1: The "Zen" Essentials (Do These First)
+High impact on feel, low complexity.
+Liquid Transitions & Easing: This is the most important "feel" update. Instead of the color boxes snapping, we use Bezier easing and a slight "blur-to-clear" transition. It should feel like the color is flowing into the box.
+Revive Sounds: Procedural, soft sounds. A low "thump" or "drip" for adding drops, and a harmonic chime (Pentatonic scale) for matches.
+Softer Failure Texts: Replace "Try again" with phrases like "Almost there," "Nearly aligned," or simply a subtle shake of the match percentage.
+Proper Color Names: Move from "Red 5" to "Spanish Crimson" or "Deep Cobalt." This adds an educational, high-end catalog feel.
+Undo Button: For a Zen game, making a mistake shouldn't require a full reset. A single "Undo" (step back) button is vital for relaxed TV play.
+🟡 Tier 2: The "Daily Hook" (Retention)
+Encourages users to return every day.
+Daily Highlight on Home: Instead of just a "Daily Challenge" button, the target color of the day should be a glowing border or background element on the landing page. Clicking it takes you straight to the challenge.
+3-Day Perfect Streak: A simple "Flame" or "Drop" icon that lights up if you finish the Daily Challenge 3 days in a row without using "Solve."
+Calendar Glow: If a user gets 5 stars on a Daily Challenge, that square in the calendar should have a subtle "outer glow" or "aura" in that color.
+🟠 Tier 3: UX & Structural Polish
+Refining the game's difficulty and onboarding.
+Less Levels per Tier: 70 levels is a lot. Reducing to 30-40 curated levels per tier makes the "100% complete" goal feel achievable rather than exhausting.
+Remove "Solve" (Replace with "Hint"): Users find "Solve" too tempting (it's an "I give up" button). Replace it with a Hint button that pulses the correct button the user needs to press next.
+Tutorial: A 3-step overlay for first-time users. "1. Look at the Goal. 2. Tap to add drops. 3. Match the ratio."
+Better Sharing: A more visual share text: HueFlow 05 Nov: 5/5 Stars ⭐⭐⭐⭐⭐ [Color Block Emoji]
+🔴 Tier 4: Visual "Juice" (Long Term)
+Big visual changes that require more performance optimization.
+Journey as a Path (Garden): Instead of a grid, the levels are connected by a winding line on a "Paper" texture. As you solve them, the "path" gets colored in.
+Wave Animation: The progress bar shouldn't just be flat; a subtle wave/liquid movement makes it feel like a vial of fluid.
+Particle Effects: Tiny "bubbles" of color that rise when you click, but very subtle so they don't distract from the TV.
+💡 Specific Feedback Analysis:
+Why "Undo" beats "Solve":
+If the player clicks Red 5 times but meant 4, currently they have to Reset. This is frustrating. Undo keeps the "Zen" by allowing a quick correction.
+The "Math Text" Problem:
+You mentioned it "feels like math." To fix this, we should hide the numbers (5R, 2G, 1B) until the level is solved. While playing, they should only see the Visual Match and the Progress Bar. This forces them to use their eyes (art) rather than their brain (math).
+Daily Challenge on Home:
+This is a great idea. It turns the landing page into a dynamic dashboard. Every day you open the app, it looks different because the "Daily Color" is influencing the home screen.
+Collections
+add copy right
+two progress bars with toggle
+🚦 Next Step Recommendation:
+I suggest we start with "The Sensory Update":
+Undo button.
+Soft Audio.
+Liquid Easing.
+Dynamic Color Names.
+Which of these categories do you want to lock in first?

@@ -13,6 +13,17 @@
     --green-btn: #4caf50;
     --blue-btn: #2196f3;
     --trans: 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        /* Standard UI (snappy but soft) */
+    --ease-ui: cubic-bezier(0.25, 1, 0.5, 1);
+    
+    /* Liquid Mix (Slow start, heavy settle - like ink in water) */
+    --ease-mix: cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* The Bloom (Atmospheric and expansive) */
+    --ease-bloom: cubic-bezier(0.22, 1, 0.36, 1);
+    
+    /* The Undo (Elastic retraction) */
+    --ease-undo: cubic-bezier(0.175, 0.885, 0.32, 1.1);
 }
 
 body,
@@ -813,4 +824,34 @@ body.light-theme .subtitle-ui {
 
 .dot.white {
     background: #ffffff;
+}
+
+.player-box {
+    /* 0.8s provides that "drifting" feel */
+    transition: background-color 0.8s var(--ease-mix);
+}
+
+body {
+    /* 1.5s is slow enough to feel like a mood shift, not a flash */
+    transition: background-color 1.5s var(--ease-bloom);
+}
+
+.fill-container {
+    transition: width 0.5s var(--ease-mix);
+}
+
+.ink-segment {
+    /* Each segment fades in with a slight "pop" */
+    /* animation: segment-reveal 0.4s var(--ease-ui); */
+}
+
+@keyframes segment-reveal {
+    from { opacity: 0; transform: scaleX(0); }
+    to { opacity: 1; transform: scaleX(1); }
+}
+
+.stars-main.active {
+    opacity: 1;
+    /* Uses the Elastic Undo curve for a bouncy "Pop" */
+    animation: starPop 0.6s var(--ease-undo);
 }

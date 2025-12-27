@@ -170,10 +170,14 @@ function recipeToRGB(rec) {
 }
 
 function mix(color) {
+
+
   if (cur.drops.t >= cur.recipe.total) return;
   cur.history.push({ ...cur.drops });
   cur.drops[color]++;
   cur.drops.t++;
+
+
   updateBars();
   updateUI();
 }
