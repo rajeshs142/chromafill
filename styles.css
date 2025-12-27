@@ -65,7 +65,7 @@ h1.game-name-ui {
 .vessel {
     background: var(--vessel) !important;
     width: 95%;
-    max-width: 320px;
+    max-width: 300px;
     padding: 20px;
     border-radius: 24px;
     /* box-shadow: 0 15px 50px rgba(0, 0, 0, 0.6); */
@@ -145,7 +145,7 @@ h1.game-name-ui {
     background: #111;
     border: 1px solid #333;
     color: var(--text-label) !important;
-    padding: 8px 16px;
+    padding: 12px 16px;
     border-radius: 20px;
     font-size: 0.6rem;
     cursor: pointer;
@@ -394,7 +394,7 @@ h1.game-name-ui {
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
     width: 100%;
-    margin-top: 10px;
+    /* margin-top: 10px; */
 }
 
 body.light-theme h1.game-name-ui,
@@ -497,6 +497,7 @@ body.light-theme .subtitle-ui {
     width: 260px;
     /* Match your nav-btn width */
     margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .home-nav-grid .nav-btn {
@@ -826,32 +827,13 @@ body.light-theme .subtitle-ui {
     background: #ffffff;
 }
 
-.player-box {
-    /* 0.8s provides that "drifting" feel */
-    transition: background-color 0.8s var(--ease-mix);
-}
-
-body {
-    /* 1.5s is slow enough to feel like a mood shift, not a flash */
-    transition: background-color 1.5s var(--ease-bloom);
-}
-
-.fill-container {
-    transition: width 0.5s var(--ease-mix);
-}
-
-.ink-segment {
-    /* Each segment fades in with a slight "pop" */
-    /* animation: segment-reveal 0.4s var(--ease-ui); */
-}
-
-@keyframes segment-reveal {
-    from { opacity: 0; transform: scaleX(0); }
-    to { opacity: 1; transform: scaleX(1); }
-}
-
 .stars-main.active {
     opacity: 1;
     /* Uses the Elastic Undo curve for a bouncy "Pop" */
     animation: starPop 0.6s var(--ease-undo);
+}
+.sub-digital {
+text-transform: uppercase;
+    font-size: 0.6rem;
+    margin-bottom: 8px;
 }

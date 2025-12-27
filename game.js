@@ -806,6 +806,7 @@ function renderJourney() {
 }
 
 function renderDaily() {
+
   const grid = document.getElementById("calendar-ui");
   grid.innerHTML = "";
   const todayStr = new Date().toISOString().split("T")[0];
@@ -884,6 +885,8 @@ function renderDaily() {
     item.appendChild(starRow);
     grid.appendChild(item);
   }
+      document.querySelectorAll(".subtitle-ui").forEach(el => el.innerText = "Daily Challenge");
+
   showScreen("screen-daily");
 }
 
